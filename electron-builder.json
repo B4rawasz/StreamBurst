@@ -1,8 +1,14 @@
 {
-	"appId": "con.B4rawasz.streamburst",
+	"appId": "con.B4rawasz.StreamBurst",
 	"files": ["dist-electron", "dist-react"],
 	"icon": "./electron.png",
 	"win": {
-		"target": ["portable", "msi"]
+		"target": ["nsis"]
+	},
+	"nsis": {
+		"oneClick": false,
+		"perMachine": false,
+		"allowElevation": true,
+		"allowToChangeInstallationDirectory": true
 	}
 }
