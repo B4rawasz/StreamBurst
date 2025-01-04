@@ -1,0 +1,8 @@
+{
+	"appId": "con.B4rawasz.streamburst",
+	"files": ["dist-electron", "dist-react"],
+	"icon": "./electron.png",
+	"win": {
+		"target": ["portable", "msi"]
+	}
+}
