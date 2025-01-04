@@ -2,8 +2,10 @@
 	"name": "StreamBurst",
 	"author": "B4rawasz",
 	"description": "Real-time game event tracker with dynamic OBS overlays for immersive streaming experiences",
-	"private": true,
 	"version": "0.0.0",
+	"repository": "https://github.com/B4rawasz/StreamBurst",
+	"license": "MIT",
+	"private": true,
 	"type": "module",
 	"main": "dist-electron/main.js",
 	"scripts": {
