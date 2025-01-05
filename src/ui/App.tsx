@@ -9,7 +9,7 @@ function App() {
 	useEffect(() => {
 		// @ts-ignore
 		window.electron.subCallback((data) => {
-			console.log(data);
+			//console.log(data);
 		});
 	}, []);
 

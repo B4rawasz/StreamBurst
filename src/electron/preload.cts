@@ -1,10 +1,10 @@
 const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
-	subCallback: (callback: (data: any) => void) => {
-		electron.ipcRenderer.on("test", (event, data) => {
+	subCallback: (callback) => {
+		electron.ipcRenderer.on("test", (_, data) => {
 			callback(data);
 		});
 	},
-	getData: () => electron.ipcRenderer.invoke("getData"),
-});
+	getModules: () => electron.ipcRenderer.invoke("getModules"),
+} satisfies Window["electron"]);
