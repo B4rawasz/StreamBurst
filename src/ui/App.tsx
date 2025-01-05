@@ -1,12 +1,21 @@
+import { useState } from "react";
+import Sidebar from "./components/custom/sidebar/sidebar";
 import { ThemeProvider } from "./components/theme-provider";
-import { Button } from "./components/ui/button";
+import ModulesPage from "./components/custom/pages/modules/ModulesPage";
 
 function App() {
+	const [page, setPage] = useState(0);
+
 	return (
 		<>
 			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-				<div className="w-full h-screen flex flex-col items-center justify-center bg-background">
-					<Button>Click me</Button>
+				<div className="w-full h-screen flex flex-row bg-background">
+					<Sidebar state={page} setState={setPage} />
+					<div className="flex-1 flex items-center justify-center">
+						{page === 0 && <ModulesPage />}
+						{page === 1 && <h1 className="text-4xl">MonitorCog</h1>}
+						{page === 2 && <h1 className="text-4xl">PencilRuler</h1>}
+					</div>
 				</div>
 			</ThemeProvider>
 		</>
