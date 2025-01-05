@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "./components/custom/sidebar/sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import ModulesPage from "./components/custom/pages/modules/ModulesPage";
 
 function App() {
 	const [page, setPage] = useState(0);
+
+	useEffect(() => {
+		// @ts-ignore
+		window.electron.subCallback((data) => {
+			console.log(data);
+		});
+	}, []);
 
 	return (
 		<>

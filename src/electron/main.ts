@@ -1,10 +1,15 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { isDev } from "./utils.js";
 import { pathToFileURL } from "url";
+import { getPreloadPath } from "./pathResolver.js";
 
 app.on("ready", () => {
-	const mainWindow = new BrowserWindow({});
+	const mainWindow = new BrowserWindow({
+		webPreferences: {
+			preload: getPreloadPath(),
+		},
+	});
 	if (isDev()) {
 		mainWindow.loadURL("http://localhost:5050");
 	} else {
@@ -13,27 +18,45 @@ app.on("ready", () => {
 		);
 	}
 
+	setInterval(() => {
+		sendTest(mainWindow);
+	}, 2000);
+
+	ipcMain.handle("getData", (event) => {
+		return "Hello from main process222";
+	});
+
 	if (isDev()) {
 		testModules();
 	}
 });
 
+function sendTest(mainWindow: BrowserWindow) {
+	mainWindow.webContents.send("test", "Hello from main process");
+}
+
 async function testModules() {
-	const modulePath = path.join(
-		app.getAppPath(),
-		"modules",
-		"test.asar",
-		"index.js"
-	);
+	const modulePath = path.join(app.getAppPath(), "modules", "test.asar");
 	console.log("modulePath", modulePath);
 
-	const testMod = await import(pathToFileURL(modulePath).href)
+	const testMod = await import(
+		pathToFileURL(path.join(modulePath, "index.js")).href
+	)
 		.then((mod) => {
 			return mod.default;
 		})
 		.catch((err) => {
 			console.log(err);
 		});
+
+	const testModData = await import(
+		pathToFileURL(path.join(modulePath, "package.json")).href,
+		{ assert: { type: "json" } }
+	).catch((err) => {
+		console.log(err);
+	});
+
+	console.log("testModData", testModData);
 
 	testMod.on("event", (data: any) => {
 		console.log("event", data);
