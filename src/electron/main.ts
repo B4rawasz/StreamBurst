@@ -10,9 +10,7 @@ import {
 let modules: Module[] = [];
 let modulesInfo: ModuleInfo[] = [];
 
-app.on("ready", async () => {
-	setupFiles();
-
+app.on("ready", () => {
 	const mainWindow = new BrowserWindow({
 		webPreferences: {
 			preload: getPreloadPath(),
@@ -26,18 +24,24 @@ app.on("ready", async () => {
 		);
 	}
 
+	setup();
+});
+
+async function setup() {
+	await setupFiles();
+
 	modules = await loadModules();
 	modulesInfo = prepareModulesInfo(modules);
 
 	setInterval(() => {
-		sendTest(mainWindow);
+		//sendTest(mainWindow);
 	}, 2000);
 
 	ipcMain.handle("getModules", (_) => {
 		return modulesInfo;
 	});
-});
-
-function sendTest(mainWindow: BrowserWindow) {
-	mainWindow.webContents.send("test", "Hello from main process");
 }
+
+/*function sendTest(mainWindow: BrowserWindow) {
+	mainWindow.webContents.send("test", "Hello from main process");
+}*/

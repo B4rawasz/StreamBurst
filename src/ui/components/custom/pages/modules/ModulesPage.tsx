@@ -70,6 +70,7 @@ const ModulesPage = () => {
 							</CardFooter>
 						</Card>
 					))}
+					<Test />
 				</div>
 			</ScrollArea>
 		</div>

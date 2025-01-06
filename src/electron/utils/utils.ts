@@ -1,12 +1,13 @@
 import { app } from "electron";
 import path from "path";
 import fs from "fs";
+import fsa from "fs/promises";
 
 export function isDev(): boolean {
 	return process.env.NODE_ENV === "development";
 }
 
-export function setupFiles(): void {
+export async function setupFiles(): Promise<void> {
 	const modulesPath = path.join(app.getPath("userData"), "modules");
 
 	let preinstaledModulesPath: string;
@@ -25,20 +26,16 @@ export function setupFiles(): void {
 		fs.mkdirSync(path.join(modulesPath, "config"));
 	}
 
-	fs.readdir(preinstaledModulesPath, (err, files) => {
-		if (err) {
-			console.log(err);
-		}
+	const files = fs.readdirSync(preinstaledModulesPath);
 
-		files.forEach((file) => {
-			if (!fs.existsSync(path.join(modulesPath, file))) {
-				asarCoppy(
-					path.join(preinstaledModulesPath, file),
-					path.join(modulesPath, file)
-				);
-			}
-		});
-	});
+	for (const file of files) {
+		if (!fs.existsSync(path.join(modulesPath, file))) {
+			await asarCoppy(
+				path.join(preinstaledModulesPath, file),
+				path.join(modulesPath, file)
+			);
+		}
+	}
 }
 
 /* Copy asar file
@@ -47,24 +44,14 @@ so we need to rename it to txt, copy it and then rename it back to asar
 Also remember to set watcher exclude in VSCode settings to exclude asar files
 or it will crash the app becouse VScode also has some wird behavior with asar files
 */
-function asarCoppy(src: string, dest: string) {
+async function asarCoppy(src: string, dest: string): Promise<void> {
 	const tempName = src.slice(0, -5) + ".txt";
 
-	fs.rename(src, tempName, (err) => {
-		if (err) {
-			console.log(err);
-		} else {
-			fs.copyFile(tempName, dest, (err) => {
-				if (err) {
-					console.log(err);
-				} else {
-					fs.rename(tempName, src, (err) => {
-						if (err) {
-							console.log(err);
-						}
-					});
-				}
-			});
-		}
-	});
+	try {
+		await fsa.rename(src, tempName);
+		await fsa.copyFile(tempName, dest);
+		await fsa.rename(tempName, src);
+	} catch (err) {
+		console.log(err);
+	}
 }

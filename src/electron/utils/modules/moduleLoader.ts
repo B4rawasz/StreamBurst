@@ -11,11 +11,15 @@ export async function loadModules(): Promise<Module[]> {
 
 	try {
 		const fileList = await fs.readdir(modulesPath);
+		console.log(fileList);
+
 		asarFiles = fileList.filter((file) => file.endsWith(".asar"));
 	} catch (err) {
 		console.log(err);
 		asarFiles = [];
 	}
+
+	console.log(asarFiles);
 
 	let modules: Module[] = [];
 
