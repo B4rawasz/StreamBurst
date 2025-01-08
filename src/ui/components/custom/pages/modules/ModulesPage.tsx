@@ -50,7 +50,7 @@ const ModulesPage = () => {
 			</span>
 
 			<ScrollArea>
-				<div className="grid grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] gap-4 px-4 pb-4">
+				<div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-4 px-4 pb-4">
 					{modules?.map((module) => (
 						<Card className="flex-grow flex flex-col" key={module.package.name}>
 							<CardHeader>
