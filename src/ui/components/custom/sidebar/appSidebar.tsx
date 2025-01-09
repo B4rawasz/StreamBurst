@@ -73,7 +73,7 @@ const AppSidebar = ({
 						<SidebarMenuButton asChild>
 							<SidebarTrigger />
 						</SidebarMenuButton>
-						<Separator />
+						<Separator className="my-1" />
 						<SidebarMenuButton>
 							<Settings />
 							Settings
