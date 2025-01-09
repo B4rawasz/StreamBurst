@@ -1,4 +1,5 @@
 import Logo from "@/assets/Logo";
+import { Separator } from "@/components/ui/separator";
 import {
 	Sidebar,
 	SidebarContent,
@@ -62,9 +63,12 @@ const AppSidebar = () => {
 				</SidebarGroup>
 			</SidebarContent>
 			<SidebarFooter>
-				<SidebarTrigger />
 				<SidebarMenu>
 					<SidebarMenuItem>
+						<SidebarMenuButton asChild>
+							<SidebarTrigger />
+						</SidebarMenuButton>
+						<Separator />
 						<SidebarMenuButton>
 							<Settings />
 							Settings
