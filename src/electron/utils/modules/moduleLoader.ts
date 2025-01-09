@@ -19,8 +19,6 @@ export async function loadModules(): Promise<Module[]> {
 		asarFiles = [];
 	}
 
-	console.log(asarFiles);
-
 	let modules: Module[] = [];
 
 	for (const asar of asarFiles) {
@@ -93,6 +91,10 @@ export async function loadModules(): Promise<Module[]> {
 					modulePackage.name + ".json"
 				),
 			});
+
+			module.setSettingsPath(
+				path.join(modulesPath, "config", modulePackage.name + ".json")
+			);
 		} catch (err) {
 			console.log(err);
 		}
@@ -106,6 +108,7 @@ export function prepareModulesInfo(modules: Module[]): ModuleInfo[] {
 		return {
 			package: module.package,
 			settings: module.settings,
+			enabled: false,
 		};
 	});
 }

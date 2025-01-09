@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
+import fs from "fs";
 import { isDev, setupFiles } from "./utils/utils.js";
 import { getPreloadPath } from "./utils/pathResolver.js";
 import {
@@ -40,6 +41,45 @@ async function setup() {
 	ipcMain.handle("getModules", (_) => {
 		return modulesInfo;
 	});
+
+	ipcMain.handle("applySettings", (_, newModule: ModuleInfo) => {
+		let moduleInfo = modulesInfo.find(
+			(module) => module.package.name === newModule.package.name
+		);
+
+		if (!moduleInfo) return;
+		moduleInfo.settings = newModule.settings;
+
+		const module = modules.find(
+			(module) => module.package.name === newModule.package.name
+		);
+
+		if (!module) return;
+		module.settings = newModule.settings;
+
+		fs.writeFileSync(
+			module.settingsPath,
+			JSON.stringify(newModule.settings, null, 2)
+		);
+
+		if (module.main.enabled) {
+			module.main.disable();
+			module.main.enable();
+		}
+	});
+
+	ipcMain.handle(
+		"changeModuleState",
+		(_, moduleName: string, enabled: boolean) => {
+			const module = modules.find(
+				(module) => module.package.name === moduleName
+			);
+
+			if (!module) return;
+			if (enabled) module.main.enable();
+			else module.main.disable();
+		}
+	);
 }
 
 /*function sendTest(mainWindow: BrowserWindow) {
