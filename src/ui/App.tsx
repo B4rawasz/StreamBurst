@@ -21,7 +21,9 @@ function App() {
 				<SidebarProvider open={sidebarOpen} onOpenChange={setSidebarOpen}>
 					<AppSidebar page={page} setPage={setPage} />
 					<SidebarInset className="w-full h-screen">
-						<ModulesPage />
+						{page === 0 && <ModulesPage />}
+						{page === 1 && <h1 className="text-4xl">MonitorCog</h1>}
+						{page === 2 && <h1 className="text-4xl">PencilRuler</h1>}
 					</SidebarInset>
 				</SidebarProvider>
 			</ThemeProvider>
