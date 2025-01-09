@@ -159,7 +159,12 @@ class ExampleModule extends EventEmitter {
 
     this.enabled = true;
 
-    this.settings = JSON.parse(fs.readFileSync(this.settingsPath));
+    this.settings = JSON.parse(fs.readFileSync(this.settingsPath)).settings;
+
+    console.log("[Example Module] Enabling");
+    console.log("[Example Module] Settings path: " + this.settingsPath);
+    console.log("[Example Module] host: " + this.settings.host);
+    console.log("[Example Module] port: " + this.settings.port);
 
     this.server = http.createServer((req, res) => {
       if (req.method == "POST") {
@@ -177,15 +182,15 @@ class ExampleModule extends EventEmitter {
         res.writeHead(200, { "Content-Type": "text/html" });
         var html =
           "<html><body>HTTP Server at http://" +
-          this.settings.host +
+          this.settings.host.value +
           ":" +
-          this.settings.port +
+          this.settings.port.value +
           "</body></html>";
         res.end(html);
       }
     });
 
-    this.server.listen(this.settings.port, this.settings.host);
+    this.server.listen(this.settings.port.value, this.settings.host.value);
   }
 
   disable() {
@@ -193,6 +198,8 @@ class ExampleModule extends EventEmitter {
       console.log("[Example Module] Already disabled");
       return;
     }
+
+    console.log("[Example Module] Disabling");
 
     this.enabled = false;
 
@@ -203,6 +210,7 @@ class ExampleModule extends EventEmitter {
 
 // Export the instance of the class as the default export
 export default new ExampleModule();
+
 ```
 </td>
 </tr>
