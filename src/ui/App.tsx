@@ -19,7 +19,7 @@ function App() {
 		<>
 			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 				<SidebarProvider open={sidebarOpen} onOpenChange={setSidebarOpen}>
-					<AppSidebar page={page} setPage={setPage} />
+					<AppSidebar page={page} setPage={setPage} setOpen={setSidebarOpen} />
 					<SidebarInset className="w-full h-screen">
 						{page === 0 && <ModulesPage />}
 						{page === 1 && <h1 className="text-4xl">MonitorCog</h1>}

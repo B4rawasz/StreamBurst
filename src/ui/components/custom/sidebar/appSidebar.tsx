@@ -1,5 +1,4 @@
 import Logo from "@/assets/Logo";
-import { Separator } from "@/components/ui/separator";
 import {
 	Sidebar,
 	SidebarContent,
@@ -10,7 +9,6 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	SidebarTrigger,
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { MonitorCog, PencilRuler, Puzzle, Settings } from "lucide-react";
@@ -18,13 +16,19 @@ import { MonitorCog, PencilRuler, Puzzle, Settings } from "lucide-react";
 const AppSidebar = ({
 	page,
 	setPage,
+	setOpen,
 }: {
 	page: number;
 	setPage: React.Dispatch<React.SetStateAction<number>>;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const { toggleSidebar } = useSidebar();
 	return (
-		<Sidebar collapsible="icon">
+		<Sidebar
+			collapsible="icon"
+			onMouseEnter={() => setOpen(true)}
+			onMouseLeave={() => setOpen(false)}
+		>
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
@@ -70,10 +74,6 @@ const AppSidebar = ({
 			<SidebarFooter>
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton asChild>
-							<SidebarTrigger />
-						</SidebarMenuButton>
-						<Separator className="my-1" />
 						<SidebarMenuButton>
 							<Settings />
 							Settings
