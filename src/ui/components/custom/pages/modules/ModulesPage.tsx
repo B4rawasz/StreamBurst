@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -8,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
-import { Puzzle } from "lucide-react";
+import { Puzzle, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Test = () => {
@@ -65,7 +66,10 @@ const ModulesPage = () => {
 									<span>{module.package.description}</span>
 								</ScrollArea>
 							</CardContent>
-							<CardFooter className="flex justify-end">
+							<CardFooter className="flex justify-between">
+								<Button size="icon" variant="ghost">
+									<Settings />
+								</Button>
 								<Switch id="cs2" />
 							</CardFooter>
 						</Card>
