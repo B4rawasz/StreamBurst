@@ -6,7 +6,6 @@ import {
 	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
-	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
@@ -16,7 +15,13 @@ import {
 } from "@/components/ui/sidebar";
 import { MonitorCog, PencilRuler, Puzzle, Settings } from "lucide-react";
 
-const AppSidebar = () => {
+const AppSidebar = ({
+	page,
+	setPage,
+}: {
+	page: number;
+	setPage: React.Dispatch<React.SetStateAction<number>>;
+}) => {
 	const { toggleSidebar } = useSidebar();
 	return (
 		<Sidebar collapsible="icon">
@@ -41,20 +46,20 @@ const AppSidebar = () => {
 					<SidebarGroupContent>
 						<SidebarMenu>
 							<SidebarMenuItem>
-								<SidebarMenuButton>
-									<Puzzle />
+								<SidebarMenuButton onClick={() => setPage(0)}>
+									<Puzzle className={page == 0 ? "stroke-primary" : ""} />
 									Modules
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 							<SidebarMenuItem>
-								<SidebarMenuButton>
-									<MonitorCog />
+								<SidebarMenuButton onClick={() => setPage(1)}>
+									<MonitorCog className={page == 1 ? "stroke-primary" : ""} />
 									Output
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 							<SidebarMenuItem>
-								<SidebarMenuButton>
-									<PencilRuler />
+								<SidebarMenuButton onClick={() => setPage(2)}>
+									<PencilRuler className={page == 2 ? "stroke-primary" : ""} />
 									Edit
 								</SidebarMenuButton>
 							</SidebarMenuItem>

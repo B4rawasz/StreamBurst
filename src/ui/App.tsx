@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
-import Sidebar from "./components/custom/sidebar/sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import ModulesPage from "./components/custom/pages/modules/ModulesPage";
-import {
-	SidebarInset,
-	SidebarProvider,
-	SidebarTrigger,
-} from "./components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import AppSidebar from "./components/custom/sidebar/appSidebar";
 
 function App() {
@@ -24,7 +19,7 @@ function App() {
 		<>
 			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 				<SidebarProvider open={sidebarOpen} onOpenChange={setSidebarOpen}>
-					<AppSidebar />
+					<AppSidebar page={page} setPage={setPage} />
 					<SidebarInset className="w-full h-screen">
 						<ModulesPage />
 					</SidebarInset>
