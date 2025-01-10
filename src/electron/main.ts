@@ -60,7 +60,7 @@ async function setup() {
 		return modulesInfo;
 	});
 
-	ipcMain.handle("applySettings", (_, newModule: ModuleInfo) => {
+	ipcMain.handle("applyModuleSettings", (_, newModule: ModuleInfo) => {
 		let moduleInfo = modulesInfo.find(
 			(module) => module.package.name === newModule.package.name
 		);

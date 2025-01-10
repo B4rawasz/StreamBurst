@@ -126,7 +126,7 @@ const ModuleSettings = ({ module }: { module: ModuleInfo }) => {
 							type="submit"
 							onClick={() => {
 								module.settings.settings = newSettings;
-								window.electron.applySettings(module);
+								window.electron.applyModuleSettings(module);
 							}}
 						>
 							Save
