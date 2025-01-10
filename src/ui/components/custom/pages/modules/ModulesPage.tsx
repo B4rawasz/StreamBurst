@@ -71,7 +71,6 @@ const ModulesPage = () => {
 					{modules?.map((module) => (
 						<ModuleCard module={module} key={module.package.name} />
 					))}
-					<Test />
 				</div>
 			</ScrollArea>
 		</div>
