@@ -3,6 +3,10 @@ type ModuleMain = {
 	disable: () => void;
 	setSettingsPath: (path: string) => void;
 	enabled: boolean;
+	on: (
+		event: "event" | "error" | "debug",
+		callback: (data: any) => void
+	) => void;
 };
 
 type ModulePackage = {
@@ -47,3 +51,9 @@ interface Window {
 		changeModuleState: (moduleName: string, enabled: boolean) => void;
 	};
 }
+
+type Settings = {
+	sidebarOnHover: boolean;
+	devMode: boolean;
+	enabledModules: string[];
+};

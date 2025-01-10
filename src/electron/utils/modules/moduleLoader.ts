@@ -103,12 +103,15 @@ export async function loadModules(): Promise<Module[]> {
 	return modules;
 }
 
-export function prepareModulesInfo(modules: Module[]): ModuleInfo[] {
+export function prepareModulesInfo(
+	modules: Module[],
+	settings: Settings
+): ModuleInfo[] {
 	return modules.map((module) => {
 		return {
 			package: module.package,
 			settings: module.settings,
-			enabled: false,
+			enabled: settings.enabledModules.includes(module.package.name),
 		};
 	});
 }

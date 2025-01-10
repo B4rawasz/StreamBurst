@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
-import { isDev, setupFiles } from "./utils/utils.js";
+import { isDev, loadSettings, setupFiles } from "./utils/utils.js";
 import { getPreloadPath } from "./utils/pathResolver.js";
 import {
 	loadModules,
@@ -10,6 +10,7 @@ import {
 
 let modules: Module[] = [];
 let modulesInfo: ModuleInfo[] = [];
+let settings: Settings;
 
 app.on("ready", () => {
 	const mainWindow = new BrowserWindow({
@@ -32,7 +33,24 @@ async function setup() {
 	await setupFiles();
 
 	modules = await loadModules();
-	modulesInfo = prepareModulesInfo(modules);
+	settings = loadSettings();
+	modulesInfo = prepareModulesInfo(modules, settings);
+
+	modules.forEach((module) => {
+		module.main.on("event", (data) => {
+			console.log(data);
+		});
+		module.main.on("error", (data) => {
+			console.error(data);
+		});
+		module.main.on("debug", (data) => {
+			console.debug(data);
+		});
+
+		if (settings.enabledModules.includes(module.package.name)) {
+			module.main.enable();
+		}
+	});
 
 	setInterval(() => {
 		//sendTest(mainWindow);
@@ -76,8 +94,22 @@ async function setup() {
 			);
 
 			if (!module) return;
-			if (enabled) module.main.enable();
-			else module.main.disable();
+			if (enabled) {
+				module.main.enable();
+				if (!settings.enabledModules.includes(module.package.name)) {
+					settings.enabledModules.push(module.package.name);
+				}
+			} else {
+				module.main.disable();
+				settings.enabledModules = settings.enabledModules.filter(
+					(name) => name !== module.package.name
+				);
+			}
+
+			fs.writeFileSync(
+				path.join(app.getPath("userData"), "settings.json"),
+				JSON.stringify(settings, null, 4)
+			);
 		}
 	);
 }

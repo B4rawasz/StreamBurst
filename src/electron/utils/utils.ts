@@ -55,3 +55,20 @@ async function asarCoppy(src: string, dest: string): Promise<void> {
 		console.log(err);
 	}
 }
+
+export function loadSettings(): Settings {
+	const settingsPath = path.join(app.getPath("userData"), "settings.json");
+
+	if (!fs.existsSync(settingsPath)) {
+		const settingsDefault: Settings = {
+			sidebarOnHover: true,
+			devMode: false,
+			enabledModules: [],
+		};
+		fs.writeFileSync(settingsPath, JSON.stringify(settingsDefault, null, 4));
+		return settingsDefault;
+	}
+
+	const settings = fs.readFileSync(settingsPath, { encoding: "utf-8" });
+	return JSON.parse(settings) as Settings;
+}
