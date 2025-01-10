@@ -36,6 +36,27 @@ export async function setupFiles(): Promise<void> {
 			);
 		}
 	}
+
+	const publicPath = path.join(app.getPath("userData"), "public");
+
+	let preinstaledPublicPath: string;
+
+	if (isDev()) {
+		preinstaledPublicPath = path.join(app.getAppPath(), "public");
+	} else {
+		preinstaledPublicPath = path.join(app.getAppPath(), "..", "..", "public");
+	}
+
+	if (!fs.existsSync(publicPath)) {
+		fs.mkdirSync(publicPath);
+	}
+
+	if (!fs.existsSync(path.join(publicPath, "index.html"))) {
+		await fsa.copyFile(
+			path.join(preinstaledPublicPath, "index.html"),
+			path.join(publicPath, "index.html")
+		);
+	}
 }
 
 /* Copy asar file

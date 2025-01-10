@@ -7,10 +7,12 @@ import {
 	loadModules,
 	prepareModulesInfo,
 } from "./utils/modules/moduleLoader.js";
+import Server from "./utils/server/server.js";
 
 let modules: Module[] = [];
 let modulesInfo: ModuleInfo[] = [];
 let settings: Settings;
+let server: Server;
 
 app.on("ready", () => {
 	const mainWindow = new BrowserWindow({
@@ -36,9 +38,13 @@ async function setup() {
 	settings = loadSettings();
 	modulesInfo = prepareModulesInfo(modules, settings);
 
+	server = new Server();
+	server.start(5051);
+
 	modules.forEach((module) => {
 		module.main.on("event", (data) => {
 			console.log(data);
+			server.emit("event", data);
 		});
 		module.main.on("error", (data) => {
 			console.error(data);

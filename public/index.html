@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>WebSocket Demo</title>
+		<script src="/socket.io/socket.io.js"></script>
+	</head>
+	<body>
+		<h1>WebSocket Demo</h1>
+		<button id="trigger">Trigger Event</button>
+		<div id="log"></div>
+
+		<script>
+			const socket = io(); // Connect to the server
+
+			// Button click to send event to server
+			document.getElementById("trigger").addEventListener("click", () => {
+				const message =
+					"Action triggered at " + new Date().toLocaleTimeString();
+				socket.emit("trigger-event", message);
+			});
+
+			// Listen for broadcast events
+			socket.on("event", (message) => {
+				const log = document.getElementById("log");
+				const newMessage = document.createElement("div");
+				newMessage.textContent = message;
+				log.appendChild(newMessage);
+			});
+		</script>
+	</body>
+</html>
