@@ -8,7 +8,7 @@ electron.contextBridge.exposeInMainWorld("electron", {
 	},
 	getModules: () => electron.ipcRenderer.invoke("getModules"),
 	applyModuleSettings: (module) =>
-		electron.ipcRenderer.invoke("applySettings", module),
+		electron.ipcRenderer.invoke("applyModuleSettings", module),
 	changeModuleState: (moduleName, enabled) =>
 		electron.ipcRenderer.invoke("changeModuleState", moduleName, enabled),
 } satisfies Window["electron"]);
