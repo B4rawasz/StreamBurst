@@ -8,10 +8,12 @@ import {
 	prepareModulesInfo,
 } from "./utils/modules/moduleLoader.js";
 import Server from "./utils/server/server.js";
+import { loadPages } from "./utils/pages/pageLoader.js";
 
 let modules: Module[] = [];
 let modulesInfo: ModuleInfo[] = [];
 let settings: Settings;
+let pages: string[] = [];
 let server: Server;
 
 app.on("ready", () => {
@@ -37,9 +39,10 @@ async function setup() {
 	modules = await loadModules();
 	settings = loadSettings();
 	modulesInfo = prepareModulesInfo(modules, settings);
+	pages = loadPages();
 
 	server = new Server();
-	server.start(5051);
+	//server.start(5051);
 
 	modules.forEach((module) => {
 		module.main.on("event", (data) => {
@@ -62,8 +65,18 @@ async function setup() {
 		//sendTest(mainWindow);
 	}, 2000);
 
+	ipcMain.handle("fullscreen", (_, fullscreen: boolean) => {
+		const mainWindow = BrowserWindow.getFocusedWindow();
+		if (!mainWindow) return;
+		mainWindow.setFullScreen(fullscreen);
+	});
+
 	ipcMain.handle("getModules", (_) => {
 		return modulesInfo;
+	});
+
+	ipcMain.handle("getPages", (_) => {
+		return pages;
 	});
 
 	ipcMain.handle("applyModuleSettings", (_, newModule: ModuleInfo) => {

@@ -62,7 +62,11 @@ const AppSidebar = ({
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 							<SidebarMenuItem>
-								<SidebarMenuButton onClick={() => setPage(2)}>
+								<SidebarMenuButton
+									onClick={() => {
+										setPage(2);
+									}}
+								>
 									<PencilRuler className={page == 2 ? "stroke-primary" : ""} />
 									Edit
 								</SidebarMenuButton>

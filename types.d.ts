@@ -47,8 +47,10 @@ interface Window {
 	electron: {
 		subCallback: (callback: (data: any) => void) => void;
 		getModules: () => Promise<ModuleInfo[]>;
+		getPages: () => Promise<string[]>;
 		applyModuleSettings: (settings: ModuleInfo) => void;
 		changeModuleState: (moduleName: string, enabled: boolean) => void;
+		fullscreen: (fullscreen: boolean) => void;
 	};
 }
 

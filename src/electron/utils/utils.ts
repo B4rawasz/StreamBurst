@@ -51,10 +51,11 @@ export async function setupFiles(): Promise<void> {
 		fs.mkdirSync(publicPath);
 	}
 
-	if (!fs.existsSync(path.join(publicPath, "index.html"))) {
+	if (!fs.existsSync(path.join(publicPath, "example"))) {
+		fs.mkdirSync(path.join(publicPath, "example"));
 		await fsa.copyFile(
 			path.join(preinstaledPublicPath, "index.html"),
-			path.join(publicPath, "index.html")
+			path.join(publicPath, "example", "index.html")
 		);
 	}
 }
