@@ -6,7 +6,6 @@ import AppSidebar from "./components/custom/sidebar/appSidebar";
 import EditorPage from "./components/custom/pages/editor/EditorPage";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Editor from "./components/custom/pages/editor/Editor";
 
 function App() {
 	return (

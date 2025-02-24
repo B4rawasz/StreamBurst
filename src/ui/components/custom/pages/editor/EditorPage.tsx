@@ -14,6 +14,7 @@ const EditorPage = () => {
 				Edit
 			</span>
 
+			{/*
 			<ScrollArea>
 				<div className="flex flex-col gap-4 px-4 pb-4">
 					{pages?.map((page) => (
@@ -21,6 +22,11 @@ const EditorPage = () => {
 					))}
 				</div>
 			</ScrollArea>
+			*/}
+
+			<div className="w-full h-full flex items-center justify-center">
+				Comming soon...
+			</div>
 		</div>
 	);
 };
