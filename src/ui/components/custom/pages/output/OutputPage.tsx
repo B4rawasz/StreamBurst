@@ -20,6 +20,15 @@ import { useEffect, useState } from "react";
 const OutputPage = () => {
 	const pages = getPages();
 
+	const settings = getSettings();
+	const [newSettings, setNewSettings] = useState(settings);
+
+	useEffect(() => {
+		if (settings !== null) {
+			setNewSettings(settings);
+		}
+	}, [settings]);
+
 	return (
 		<div className="h-full w-full flex flex-col">
 			<span className="text-4xl font-bold flex items-center gap-4 p-4">
@@ -36,7 +45,7 @@ const OutputPage = () => {
 						<div className="text-md font-bold">Profile:</div>
 						<Select>
 							<SelectTrigger>
-								<SelectValue placeholder="Theme" />
+								<SelectValue placeholder="Profile" />
 							</SelectTrigger>
 							<SelectContent>
 								{pages?.map((page) => (
@@ -47,7 +56,19 @@ const OutputPage = () => {
 							</SelectContent>
 						</Select>
 						<div className="text-md font-bold">Port:</div>
-						<Input type="number" placeholder="0000" />
+						<Input
+							type="number"
+							placeholder="0000"
+							value={newSettings?.servicePort}
+							onChange={(e) => {
+								setNewSettings(
+									newSettings && {
+										...newSettings,
+										servicePort: Number(e.target.value),
+									}
+								);
+							}}
+						/>
 					</CardContent>
 					<CardFooter className="flex flex-row justify-end gap-4 ">
 						<Button variant="secondary">Copy URL</Button>
@@ -81,6 +102,18 @@ function getPages() {
 	}, []);
 
 	return pages;
+}
+
+function getSettings() {
+	const [settings, setSettings] = useState<Settings | null>(null);
+
+	useEffect(() => {
+		(async () => {
+			setSettings(await window.electron.getSettings());
+		})();
+	}, []);
+
+	return settings;
 }
 
 export default OutputPage;
