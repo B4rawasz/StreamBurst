@@ -7,19 +7,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { MonitorCog } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const OutputPage = () => {
-	const pages = getPages();
-
 	const settings = getSettings();
 	const [newSettings, setNewSettings] = useState(settings);
 
@@ -42,19 +33,6 @@ const OutputPage = () => {
 						<CardTitle>Settings</CardTitle>
 					</CardHeader>
 					<CardContent className="grow grid grid-cols-[1fr_2fr] items-center gap-2">
-						<div className="text-md font-bold">Profile:</div>
-						<Select>
-							<SelectTrigger>
-								<SelectValue placeholder="Profile" />
-							</SelectTrigger>
-							<SelectContent>
-								{pages?.map((page) => (
-									<SelectItem key={page} value={page}>
-										{page}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
 						<div className="text-md font-bold">Port:</div>
 						<Input
 							type="number"
@@ -91,18 +69,6 @@ const OutputPage = () => {
 		</div>
 	);
 };
-
-function getPages() {
-	const [pages, setPages] = useState<string[] | null>(null);
-
-	useEffect(() => {
-		(async () => {
-			setPages(await window.electron.getPages());
-		})();
-	}, []);
-
-	return pages;
-}
 
 function getSettings() {
 	const [settings, setSettings] = useState<Settings | null>(null);
