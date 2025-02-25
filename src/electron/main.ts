@@ -42,7 +42,7 @@ async function setup() {
 	pages = loadPages();
 
 	server = new Server();
-	//server.start(5051);
+	server.start(settings.servicePort);
 
 	modules.forEach((module) => {
 		module.main.on("event", (data) => {
@@ -131,6 +131,22 @@ async function setup() {
 			);
 		}
 	);
+
+	ipcMain.handle("getSettings", (_) => {
+		return settings;
+	});
+
+	ipcMain.handle("changeSetting", (_, newSettings: Settings) => {
+		if (newSettings.servicePort !== settings.servicePort) {
+			server.stop();
+			server.start(newSettings.servicePort);
+		}
+		settings = newSettings;
+		fs.writeFileSync(
+			path.join(app.getPath("userData"), "settings.json"),
+			JSON.stringify(settings, null, 4)
+		);
+	});
 }
 
 /*function sendTest(mainWindow: BrowserWindow) {

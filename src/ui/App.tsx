@@ -6,6 +6,7 @@ import AppSidebar from "./components/custom/sidebar/appSidebar";
 import EditorPage from "./components/custom/pages/editor/EditorPage";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import OutputPage from "./components/custom/pages/output/OutputPage";
 
 function App() {
 	return (
@@ -35,7 +36,7 @@ const Main = () => {
 					<AppSidebar page={page} setPage={setPage} setOpen={setSidebarOpen} />
 					<SidebarInset className="w-full h-screen">
 						{page === 0 && <ModulesPage />}
-						{page === 1 && <h1 className="text-4xl">MonitorCog</h1>}
+						{page === 1 && <OutputPage />}
 						{page === 2 && <EditorPage />}
 					</SidebarInset>
 				</SidebarProvider>

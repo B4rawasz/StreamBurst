@@ -51,11 +51,14 @@ interface Window {
 		applyModuleSettings: (settings: ModuleInfo) => void;
 		changeModuleState: (moduleName: string, enabled: boolean) => void;
 		fullscreen: (fullscreen: boolean) => void;
+		getSettings: () => Promise<Settings>;
+		setSettings: (settings: Settings) => void;
 	};
 }
 
 type Settings = {
 	sidebarOnHover: boolean;
 	devMode: boolean;
+	servicePort: number;
 	enabledModules: string[];
 };

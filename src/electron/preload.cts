@@ -14,4 +14,7 @@ electron.contextBridge.exposeInMainWorld("electron", {
 		electron.ipcRenderer.invoke("changeModuleState", moduleName, enabled),
 	fullscreen: (fullscreen) =>
 		electron.ipcRenderer.invoke("fullscreen", fullscreen),
+	getSettings: () => electron.ipcRenderer.invoke("getSettings"),
+	setSettings: (settings) =>
+		electron.ipcRenderer.invoke("setSettings", settings),
 } satisfies Window["electron"]);

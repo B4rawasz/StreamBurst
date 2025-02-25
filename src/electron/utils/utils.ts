@@ -85,6 +85,7 @@ export function loadSettings(): Settings {
 		const settingsDefault: Settings = {
 			sidebarOnHover: true,
 			devMode: false,
+			servicePort: 5051,
 			enabledModules: [],
 		};
 		fs.writeFileSync(settingsPath, JSON.stringify(settingsDefault, null, 4));
