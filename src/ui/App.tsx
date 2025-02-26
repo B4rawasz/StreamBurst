@@ -7,6 +7,7 @@ import EditorPage from "./components/custom/pages/editor/EditorPage";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import OutputPage from "./components/custom/pages/output/OutputPage";
+import { useMonaco } from "@monaco-editor/react";
 
 function App() {
 	return (
@@ -21,6 +22,21 @@ function App() {
 const Main = () => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [page, setPage] = useState(0);
+
+	const monaco = useMonaco();
+
+	useEffect(() => {
+		monaco?.editor.defineTheme("myDark", {
+			base: "vs-dark",
+			inherit: true,
+			rules: [],
+			colors: {
+				"editor.background": "#00000000",
+				"editor.border": "#00000000",
+				focusBorder: "#27272A",
+			},
+		});
+	}, [monaco]);
 
 	useEffect(() => {
 		// @ts-ignore

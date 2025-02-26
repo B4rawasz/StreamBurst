@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { MonitorCog } from "lucide-react";
 import { useEffect, useState } from "react";
+import Editor from "@monaco-editor/react";
 
 const OutputPage = () => {
 	const settings = getSettings();
@@ -31,6 +32,11 @@ const OutputPage = () => {
 		}
 	}, [settings]);
 
+	const options = {
+		readOnly: false,
+		minimap: { enabled: false },
+	};
+
 	return (
 		<div className="h-full w-full flex flex-col">
 			<span className="text-4xl font-bold flex items-center gap-4 p-4">
@@ -38,7 +44,7 @@ const OutputPage = () => {
 				Output
 			</span>
 
-			<div className="w-full h-full grid grid-cols-2 px-4 pb-4 gap-4 grid-rows-[auto_1fr]">
+			<div className="w-full h-full grid grid-cols-[2fr_3fr] px-4 pb-4 gap-4 grid-rows-[auto_1fr]">
 				<Card className="flex flex-col">
 					<CardHeader>
 						<CardTitle>Settings</CardTitle>
@@ -97,11 +103,16 @@ const OutputPage = () => {
 						</AlertDialog>
 					</CardFooter>
 				</Card>
-				<Card className="row-span-2">
+				<Card className="row-span-2 flex flex-col">
 					<CardHeader>
 						<CardTitle>Test payload</CardTitle>
 					</CardHeader>
-					<CardContent>ccc</CardContent>
+					<CardContent className="grow">
+						<Editor defaultLanguage="json" options={options} theme="myDark" />
+					</CardContent>
+					<CardFooter>
+						<Button variant="secondary">Send</Button>
+					</CardFooter>
 				</Card>
 				<Card>
 					<CardHeader>
@@ -115,6 +126,7 @@ const OutputPage = () => {
 								newSettings?.servicePort +
 								'" defer></script>'
 							}
+							readOnly
 						></Input>
 						<Button
 							variant="secondary"
