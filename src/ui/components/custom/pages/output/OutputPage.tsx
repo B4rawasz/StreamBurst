@@ -1,3 +1,14 @@
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -59,15 +70,31 @@ const OutputPage = () => {
 						>
 							Cancel
 						</Button>
-						<Button
-							onClick={() => {
-								if (newSettings !== null) {
-									window.electron.setSettings(newSettings);
-								}
-							}}
-						>
-							Save
-						</Button>
+						<AlertDialog>
+							<AlertDialogTrigger asChild>
+								<Button>Save</Button>
+							</AlertDialogTrigger>
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+									<AlertDialogDescription>
+										You will have to update all your overlays manually!
+									</AlertDialogDescription>
+								</AlertDialogHeader>
+								<AlertDialogFooter>
+									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogAction
+										onClick={() => {
+											if (newSettings !== null) {
+												window.electron.setSettings(newSettings);
+											}
+										}}
+									>
+										Continue
+									</AlertDialogAction>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
 					</CardFooter>
 				</Card>
 				<Card className="row-span-2">
