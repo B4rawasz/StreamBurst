@@ -107,15 +107,27 @@ const OutputPage = () => {
 					<CardHeader>
 						<CardTitle>Tools</CardTitle>
 					</CardHeader>
-					<CardContent>
+					<CardContent className="flex flex-col gap-2 items-center">
 						<Input
+							className="w-full"
 							value={
 								'<script src="http://localhost/stream_burst.js:' +
 								newSettings?.servicePort +
 								'" defer></script>'
 							}
 						></Input>
-						<Button variant="secondary">Copy snippet</Button>
+						<Button
+							variant="secondary"
+							onClick={() => {
+								navigator.clipboard.writeText(
+									'<script src="http://localhost/stream_burst.js:' +
+										newSettings?.servicePort +
+										'" defer></script>'
+								);
+							}}
+						>
+							Copy snippet
+						</Button>
 					</CardContent>
 				</Card>
 			</div>
