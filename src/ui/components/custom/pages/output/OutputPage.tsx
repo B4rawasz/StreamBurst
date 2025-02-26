@@ -108,7 +108,14 @@ const OutputPage = () => {
 						<CardTitle>Tools</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<Button variant="secondary">Copy URL</Button>
+						<Input
+							value={
+								'<script src="http://localhost/stream_burst.js:' +
+								newSettings?.servicePort +
+								'" defer></script>'
+							}
+						></Input>
+						<Button variant="secondary">Copy snippet</Button>
 					</CardContent>
 				</Card>
 			</div>
