@@ -27,7 +27,7 @@ const OutputPage = () => {
 				Output
 			</span>
 
-			<div className="w-full h-full grid grid-cols-2 px-4 pb-4 gap-4">
+			<div className="w-full h-full grid grid-cols-2 px-4 pb-4 gap-4 grid-rows-[auto_1fr]">
 				<Card className="flex flex-col">
 					<CardHeader>
 						<CardTitle>Settings</CardTitle>
@@ -49,21 +49,23 @@ const OutputPage = () => {
 						/>
 					</CardContent>
 					<CardFooter className="flex flex-row justify-end gap-4 ">
-						<Button variant="secondary">Copy URL</Button>
+						<Button variant="secondary">Cancel</Button>
 						<Button>Save</Button>
 					</CardFooter>
 				</Card>
-				<Card>
-					<CardHeader>
-						<CardTitle>Preview</CardTitle>
-					</CardHeader>
-					<CardContent>bbb</CardContent>
-				</Card>
-				<Card className="col-span-2">
+				<Card className="row-span-2">
 					<CardHeader>
 						<CardTitle>Test payload</CardTitle>
 					</CardHeader>
 					<CardContent>ccc</CardContent>
+				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>Tools</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Button variant="secondary">Copy URL</Button>
+					</CardContent>
 				</Card>
 			</div>
 		</div>
