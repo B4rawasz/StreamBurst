@@ -110,8 +110,8 @@ const OutputPage = () => {
 					<CardContent className="grow">
 						<Editor defaultLanguage="json" options={options} theme="myDark" />
 					</CardContent>
-					<CardFooter>
-						<Button variant="secondary">Send</Button>
+					<CardFooter className="flex flex-row justify-end">
+						<Button>Send</Button>
 					</CardFooter>
 				</Card>
 				<Card>
