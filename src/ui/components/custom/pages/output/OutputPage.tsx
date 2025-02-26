@@ -49,8 +49,25 @@ const OutputPage = () => {
 						/>
 					</CardContent>
 					<CardFooter className="flex flex-row justify-end gap-4 ">
-						<Button variant="secondary">Cancel</Button>
-						<Button>Save</Button>
+						<Button
+							variant="secondary"
+							onClick={() => {
+								if (settings !== null) {
+									setNewSettings(settings);
+								}
+							}}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={() => {
+								if (newSettings !== null) {
+									window.electron.setSettings(newSettings);
+								}
+							}}
+						>
+							Save
+						</Button>
 					</CardFooter>
 				</Card>
 				<Card className="row-span-2">

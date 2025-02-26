@@ -136,7 +136,7 @@ async function setup() {
 		return settings;
 	});
 
-	ipcMain.handle("changeSetting", (_, newSettings: Settings) => {
+	ipcMain.handle("setSettings", (_, newSettings: Settings) => {
 		if (newSettings.servicePort !== settings.servicePort) {
 			server.stop();
 			server.start(newSettings.servicePort);
