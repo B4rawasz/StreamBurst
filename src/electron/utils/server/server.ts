@@ -1,8 +1,9 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import http from "http";
 import { Server as SocketServer } from "socket.io";
 import { app as electronApp } from "electron";
 import path from "path";
+import fs from "fs";
 import { isDev } from "../utils.js";
 
 interface Server {
@@ -10,6 +11,7 @@ interface Server {
 	server: http.Server;
 	io: SocketServer;
 	enabled: boolean;
+	port: number;
 	start(port: number): void;
 	stop(): void;
 }
@@ -25,6 +27,38 @@ class Server implements Server {
 		this.server = http.createServer(this.app);
 		this.io = new SocketServer(this.server);
 		this.enabled = false;
+		this.port = 0;
+
+		this.app.use((req: Request, res: Response, next: NextFunction): void => {
+			const requestedPath = path.join(
+				electronApp.getPath("userData"),
+				"public",
+				req.path
+			);
+
+			// Check if the requested path is a directory
+			if (
+				fs.existsSync(requestedPath) &&
+				fs.statSync(requestedPath).isDirectory()
+			) {
+				const indexPath = path.join(requestedPath, "index.html");
+
+				if (fs.existsSync(indexPath)) {
+					const fileContent = fs.readFileSync(indexPath, "utf8");
+					const modifiedContent = fileContent.replace(
+						"<head>",
+						"<head><script src='/socket.io/socket.io.js'></script><script src='http://localhost:" +
+							this.port +
+							"/StreamBurst/stream_burst.js'></script>"
+					);
+					res.send(modifiedContent);
+					return;
+				}
+			}
+
+			// If no matching folder or index.html, continue to next middleware (404 handler)
+			next();
+		});
 
 		this.app.use(
 			express.static(path.join(electronApp.getPath("userData"), "public"))
@@ -49,6 +83,7 @@ class Server implements Server {
 		}
 
 		this.enabled = true;
+		this.port = port;
 
 		this.server.listen(port, () => {
 			if (isDev()) {
