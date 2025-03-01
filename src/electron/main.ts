@@ -47,12 +47,19 @@ async function setup() {
 	modules.forEach((module) => {
 		module.main.on("event", (data) => {
 			server.emit("event", data);
+			if (isDev()) {
+				console.log(data);
+			}
 		});
 		module.main.on("error", (data) => {
-			console.error(data);
+			if (isDev()) {
+				console.error(data);
+			}
 		});
 		module.main.on("debug", (data) => {
-			console.debug(data);
+			if (isDev()) {
+				console.debug(data);
+			}
 		});
 
 		if (settings.enabledModules.includes(module.package.name)) {
