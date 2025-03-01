@@ -42,14 +42,9 @@ export async function setupFiles(): Promise<void> {
 	let preinstaledPublicPath: string;
 
 	if (isDev()) {
-		preinstaledPublicPath = path.join(app.getAppPath(), "dist-public");
+		preinstaledPublicPath = path.join(app.getAppPath(), "public");
 	} else {
-		preinstaledPublicPath = path.join(
-			app.getAppPath(),
-			"..",
-			"..",
-			"dist-public"
-		);
+		preinstaledPublicPath = path.join(app.getAppPath(), "..", "..", "public");
 	}
 
 	if (!fs.existsSync(publicPath)) {

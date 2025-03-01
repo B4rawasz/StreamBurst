@@ -2,7 +2,7 @@
 	"appId": "com.B4rawasz.StreamBurst",
 	"files": ["dist-electron", "dist-react"],
 	"extraResources": ["dist-electron/preload.cjs"],
-	"extraFiles": ["modules", "dist-public"],
+	"extraFiles": ["modules", "public"],
 	"icon": "./electron.png",
 	"win": {
 		"target": ["nsis"]
