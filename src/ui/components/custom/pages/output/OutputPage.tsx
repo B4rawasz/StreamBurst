@@ -21,16 +21,34 @@ import { Input } from "@/components/ui/input";
 import { MonitorCog } from "lucide-react";
 import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
 const OutputPage = () => {
 	const settings = getSettings();
 	const [newSettings, setNewSettings] = useState(settings);
+
+	const pages = getPages();
+	const [selectedPage, setSelectedPage] = useState(pages?.[0]);
 
 	useEffect(() => {
 		if (settings !== null) {
 			setNewSettings(settings);
 		}
 	}, [settings]);
+
+	useEffect(() => {
+		if (pages !== null) {
+			setSelectedPage(pages[0]);
+		}
+	}, [pages]);
 
 	const options = {
 		readOnly: false,
@@ -92,7 +110,7 @@ const OutputPage = () => {
 								<AlertDialogHeader>
 									<AlertDialogTitle>Are you sure?</AlertDialogTitle>
 									<AlertDialogDescription>
-										You will have to update all your overlays manually!
+										You will have to update all your overlays in OBS manually!
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 								<AlertDialogFooter>
@@ -132,12 +150,28 @@ const OutputPage = () => {
 						<CardTitle>Tools</CardTitle>
 					</CardHeader>
 					<CardContent className="flex flex-col gap-2 items-center">
+						<Select value={selectedPage} onValueChange={setSelectedPage}>
+							<SelectTrigger>
+								<SelectValue placeholder="TESTTTT" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>Overlays</SelectLabel>
+									{pages?.map((page) => (
+										<SelectItem value={page} key={page}>
+											{page}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select>
 						<Input
 							className="w-full"
 							value={
-								'<script src="/socket.io/socket.io.js"></script><script src="http://localhost:' +
+								"http://localhost:" +
 								newSettings?.servicePort +
-								'/StreamBurst/stream_burst.js"></script>'
+								"/" +
+								selectedPage
 							}
 							readOnly
 						></Input>
@@ -145,9 +179,10 @@ const OutputPage = () => {
 							variant="secondary"
 							onClick={() => {
 								navigator.clipboard.writeText(
-									'<script src="/socket.io/socket.io.js"></script>\n<script src="http://localhost:' +
+									"http://localhost:" +
 										newSettings?.servicePort +
-										'/StreamBurst/stream_burst.js"></script>'
+										"/" +
+										selectedPage
 								);
 							}}
 						>
@@ -170,6 +205,18 @@ function getSettings() {
 	}, []);
 
 	return settings;
+}
+
+function getPages() {
+	const [pages, setPages] = useState<string[] | null>(null);
+
+	useEffect(() => {
+		(async () => {
+			setPages(await window.electron.getPages());
+		})();
+	}, []);
+
+	return pages;
 }
 
 export default OutputPage;
