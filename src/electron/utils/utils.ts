@@ -57,6 +57,28 @@ export async function setupFiles(): Promise<void> {
 			path.join(preinstaledPublicPath, "stream_burst.js"),
 			path.join(publicPath, "StreamBurst", "stream_burst.js")
 		);
+		await fsa.copyFile(
+			path.join(preinstaledPublicPath, "index.html"),
+			path.join(publicPath, "StreamBurst", "index.html")
+		);
+	}
+
+	if (isDev()) {
+		fs.watchFile(
+			path.join(preinstaledPublicPath, "stream_burst.js"),
+			async () => {
+				await fsa.copyFile(
+					path.join(preinstaledPublicPath, "stream_burst.js"),
+					path.join(publicPath, "StreamBurst", "stream_burst.js")
+				);
+			}
+		);
+		fs.watchFile(path.join(preinstaledPublicPath, "index.html"), async () => {
+			await fsa.copyFile(
+				path.join(preinstaledPublicPath, "index.html"),
+				path.join(publicPath, "StreamBurst", "index.html")
+			);
+		});
 	}
 }
 
