@@ -135,9 +135,9 @@ const OutputPage = () => {
 						<Input
 							className="w-full"
 							value={
-								'<script src="http://localhost/stream_burst.js:' +
+								'<script src="/socket.io/socket.io.js"></script><script src="http://localhost:' +
 								newSettings?.servicePort +
-								'" defer></script>'
+								'/StreamBurst/stream_burst.js"></script>'
 							}
 							readOnly
 						></Input>
@@ -145,9 +145,9 @@ const OutputPage = () => {
 							variant="secondary"
 							onClick={() => {
 								navigator.clipboard.writeText(
-									'<script src="http://localhost/stream_burst.js:' +
+									'<script src="/socket.io/socket.io.js"></script>\n<script src="http://localhost:' +
 										newSettings?.servicePort +
-										'" defer></script>'
+										'/StreamBurst/stream_burst.js"></script>'
 								);
 							}}
 						>
