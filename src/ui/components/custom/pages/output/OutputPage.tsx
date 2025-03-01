@@ -37,6 +37,14 @@ const OutputPage = () => {
 		minimap: { enabled: false },
 	};
 
+	const defaultPayload = `{
+    "type": "event",
+    "emitter": "moduleName",
+    "eventId": "eventId",
+    "content": {
+        "test": "test event"
+    }\n}`;
+
 	return (
 		<div className="h-full w-full flex flex-col">
 			<span className="text-4xl font-bold flex items-center gap-4 p-4">
@@ -108,7 +116,12 @@ const OutputPage = () => {
 						<CardTitle>Test payload</CardTitle>
 					</CardHeader>
 					<CardContent className="grow">
-						<Editor defaultLanguage="json" options={options} theme="myDark" />
+						<Editor
+							defaultLanguage="json"
+							options={options}
+							theme="myDark"
+							defaultValue={defaultPayload}
+						/>
 					</CardContent>
 					<CardFooter className="flex flex-row justify-end">
 						<Button>Send</Button>
