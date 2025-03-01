@@ -52,11 +52,13 @@ async function setup() {
 			}
 		});
 		module.main.on("error", (data) => {
+			server.emit("error", data);
 			if (isDev()) {
 				console.error(data);
 			}
 		});
 		module.main.on("debug", (data) => {
+			server.emit("debug", data);
 			if (isDev()) {
 				console.debug(data);
 			}
@@ -152,6 +154,22 @@ async function setup() {
 			path.join(app.getPath("userData"), "settings.json"),
 			JSON.stringify(settings, null, 4)
 		);
+	});
+
+	ipcMain.handle("sendTestPayload", (_, payload: string) => {
+		const obj = JSON.parse(payload);
+
+		switch (obj.type) {
+			case "event":
+				server.emit("event", payload);
+				break;
+			case "error":
+				server.emit("error", payload);
+				break;
+			case "debug":
+				server.emit("debug", payload);
+				break;
+		}
 	});
 }
 

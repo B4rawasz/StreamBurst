@@ -53,6 +53,7 @@ interface Window {
 		fullscreen: (fullscreen: boolean) => void;
 		getSettings: () => Promise<Settings>;
 		setSettings: (settings: Settings) => void;
+		sendTestPayload: (payload: string) => void;
 	};
 }
 

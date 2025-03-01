@@ -63,6 +63,8 @@ const OutputPage = () => {
         "test": "test event"
     }\n}`;
 
+	const [payload, setPayload] = useState(defaultPayload);
+
 	return (
 		<div className="h-full w-full flex flex-col">
 			<span className="text-4xl font-bold flex items-center gap-4 p-4">
@@ -138,11 +140,18 @@ const OutputPage = () => {
 							defaultLanguage="json"
 							options={options}
 							theme="myDark"
-							defaultValue={defaultPayload}
+							value={payload}
+							onChange={(value) => setPayload(value || "")}
 						/>
 					</CardContent>
 					<CardFooter className="flex flex-row justify-end">
-						<Button>Send</Button>
+						<Button
+							onClick={() => {
+								window.electron.sendTestPayload(payload);
+							}}
+						>
+							Send
+						</Button>
 					</CardFooter>
 				</Card>
 				<Card>

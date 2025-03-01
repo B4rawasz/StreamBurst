@@ -17,4 +17,6 @@ electron.contextBridge.exposeInMainWorld("electron", {
 	getSettings: () => electron.ipcRenderer.invoke("getSettings"),
 	setSettings: (settings) =>
 		electron.ipcRenderer.invoke("setSettings", settings),
+	sendTestPayload: (payload) =>
+		electron.ipcRenderer.invoke("sendTestPayload", payload),
 } satisfies Window["electron"]);
