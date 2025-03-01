@@ -73,6 +73,11 @@ class Server implements Server {
 
 	emit(event: string, data: any) {
 		if (!this.enabled) return;
+
+		if (isDev()) {
+			console.log("Emitting event: ", event, data);
+		}
+
 		this.io.emit(event, data);
 	}
 }

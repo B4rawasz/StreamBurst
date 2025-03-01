@@ -46,7 +46,6 @@ async function setup() {
 
 	modules.forEach((module) => {
 		module.main.on("event", (data) => {
-			console.log(data);
 			server.emit("event", data);
 		});
 		module.main.on("error", (data) => {
