@@ -27,7 +27,9 @@ class Server implements Server {
 		this.enabled = false;
 
 		this.app.use(
-			express.static(path.join(electronApp.getPath("userData"), "public"))
+			express.static(
+				path.join(electronApp.getPath("userData"), "public", "StreamBurst")
+			)
 		);
 
 		this.io.on("connection", (socket) => {
