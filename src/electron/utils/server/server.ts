@@ -1,6 +1,6 @@
 import express from "express";
 import http from "http";
-import { DefaultEventsMap, Server as SocketServer } from "socket.io";
+import { Server as SocketServer } from "socket.io";
 import { app as electronApp } from "electron";
 import path from "path";
 import { isDev } from "../utils.js";

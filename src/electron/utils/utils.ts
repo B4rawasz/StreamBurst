@@ -42,20 +42,25 @@ export async function setupFiles(): Promise<void> {
 	let preinstaledPublicPath: string;
 
 	if (isDev()) {
-		preinstaledPublicPath = path.join(app.getAppPath(), "public");
+		preinstaledPublicPath = path.join(app.getAppPath(), "dist-public");
 	} else {
-		preinstaledPublicPath = path.join(app.getAppPath(), "..", "..", "public");
+		preinstaledPublicPath = path.join(
+			app.getAppPath(),
+			"..",
+			"..",
+			"dist-public"
+		);
 	}
 
 	if (!fs.existsSync(publicPath)) {
 		fs.mkdirSync(publicPath);
 	}
 
-	if (!fs.existsSync(path.join(publicPath, "example"))) {
-		fs.mkdirSync(path.join(publicPath, "example"));
+	if (!fs.existsSync(path.join(publicPath, "StreamBurst"))) {
+		fs.mkdirSync(path.join(publicPath, "StreamBurst"));
 		await fsa.copyFile(
-			path.join(preinstaledPublicPath, "index.html"),
-			path.join(publicPath, "example", "index.html")
+			path.join(preinstaledPublicPath, "stream_burst.js"),
+			path.join(publicPath, "StreamBurst", "stream_burst.js")
 		);
 	}
 }
