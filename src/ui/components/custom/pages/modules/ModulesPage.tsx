@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Puzzle, Settings } from "lucide-react";
@@ -69,6 +70,7 @@ const ModuleCard = ({ module }: { module: ModuleInfo }) => {
 			</CardContent>
 			<CardFooter className="flex justify-between">
 				<ModuleSettings module={module} />
+				<ModuleEvents module={module} />
 				<Switch
 					checked={enabled}
 					onCheckedChange={(e) => {
@@ -195,6 +197,79 @@ const ModuleSettingsInput = ({
 				</HoverCardTrigger>
 				<HoverCardContent side="left">{value.description}</HoverCardContent>
 			</HoverCard>
+		</div>
+	);
+};
+
+const ModuleEvents = ({ module }: { module: ModuleInfo }) => {
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button size="icon" variant="ghost">
+					<Settings />
+				</Button>
+			</DialogTrigger>
+			<DialogContent
+				className="max-h-[calc(100vh-2rem)] flex flex-col"
+				onOpenAutoFocus={(e) => {
+					e.preventDefault();
+				}}
+			>
+				<DialogHeader>
+					<DialogTitle>{module.package.name}</DialogTitle>
+					<DialogDescription className="flex flex-row justify-between">
+						<span>{module.package.version}</span>
+						<span>{module.package.author}</span>
+					</DialogDescription>
+				</DialogHeader>
+				<ScrollArea className="flex-1 h-1 overflow-y-auto">
+					<div className="flex flex-col gap-4">
+						{Object.entries(module.events).map(([key, value]) => {
+							return (
+								<ModuleEventsEvent eventId={key} event={value} key={key} />
+							);
+						})}
+					</div>
+				</ScrollArea>
+				<DialogFooter>
+					<DialogClose asChild>
+						<Button type="submit">Save</Button>
+					</DialogClose>
+					<DialogClose asChild>
+						<Button variant="secondary">Cancel</Button>
+					</DialogClose>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
+	);
+};
+
+const ModuleEventsEvent = ({
+	eventId,
+	event,
+}: {
+	eventId: string;
+	event: ModuleEventsEvent;
+}) => {
+	return (
+		<div className="flex flex-col gap-2 bg-card rounded-md p-2">
+			<div className="text-md font-bold">{eventId}</div>
+			<div>{event.description}</div>
+			{Object.keys(event.params).length > 0 && <Separator />}
+			{Object.entries(event.params).map(([key, value]) => {
+				return (
+					<div
+						key={key}
+						className="grid grid-cols-[auto,1fr] gap-2 items-center"
+					>
+						<div className="font-medium bg-secondary w-min p-1.5 rounded-md">
+							{key}
+						</div>
+						<div>Type: {value.type}</div>
+						<div className="col-span-2">{value.description}</div>
+					</div>
+				);
+			})}
 		</div>
 	);
 };

@@ -30,16 +30,20 @@ type ModuleSettings = {
 	};
 };
 
-type ModuleEvents = {
-	[key: string]: {
-		description: string;
-		parmas: {
-			[key: string]: {
-				type: "string" | "number" | "boolean";
-				description: string;
-			};
-		};
+type ModulesEventsEventProperty = {
+	type: string;
+	description: string;
+};
+
+type ModuleEventsEvent = {
+	description: string;
+	params: {
+		[key: string]: ModulesEventsEventProperty;
 	};
+};
+
+type ModuleEvents = {
+	[key: string]: ModuleEventsEvent;
 };
 
 type Module = {

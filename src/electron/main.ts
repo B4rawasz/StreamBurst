@@ -41,6 +41,10 @@ async function setup() {
 	modulesInfo = prepareModulesInfo(modules, settings);
 	pages = loadPages();
 
+	modulesInfo.forEach((module) => {
+		console.log(module.events);
+	});
+
 	server = new Server();
 	server.start(settings.servicePort);
 
