@@ -30,16 +30,30 @@ type ModuleSettings = {
 	};
 };
 
+type ModuleEvents = {
+	[key: string]: {
+		description: string;
+		parmas: {
+			[key: string]: {
+				type: "string" | "number" | "boolean";
+				description: string;
+			};
+		};
+	};
+};
+
 type Module = {
 	main: ModuleMain;
 	package: ModulePackage;
 	settings: ModuleSettings;
 	settingsPath: string;
+	events: ModuleEvents;
 };
 
 type ModuleInfo = {
 	package: ModulePackage;
 	settings: ModuleSettings;
+	events: ModuleEvents;
 	enabled: boolean;
 };
 

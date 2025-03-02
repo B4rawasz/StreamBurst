@@ -81,6 +81,13 @@ export async function loadModules(): Promise<Module[]> {
 				}
 			}
 
+			const moduleEventsJSON = await fs.readFile(
+				path.join(modulePath, "events.json"),
+				{ encoding: "utf-8" }
+			);
+
+			const moduleEvents = JSON.parse(moduleEventsJSON) as ModuleEvents;
+
 			modules.push({
 				main: module,
 				package: modulePackage,
@@ -90,6 +97,7 @@ export async function loadModules(): Promise<Module[]> {
 					"config",
 					modulePackage.name + ".json"
 				),
+				events: moduleEvents,
 			});
 
 			module.setSettingsPath(
@@ -111,6 +119,7 @@ export function prepareModulesInfo(
 		return {
 			package: module.package,
 			settings: module.settings,
+			events: module.events,
 			enabled: settings.enabledModules.includes(module.package.name),
 		};
 	});
