@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# StreamBurst
+[img here]
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Welcome!
+StreamBurst is an application that will allow you to bring your broadcast to life. 
 
-Currently, two official plugins are available:
+## What StreamBurst can do
+Connect to your favorite games/apps and spice up your viewers' watching experience.\
+All you have to do is choose the right module, overlay, configure the settings and you're done!!!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[img here]
 
-## Expanding the ESLint configuration
+If you want you can also create your own module.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installing and running StreamBurst
+Download the latest release from here. Install and you're ready to go :)\
+For use with OBS, just copy the link from the output tab and paste it into the `sources > browser`\
+You can find the full guide here.
 
-- Configure the top-level `parserOptions` property like this:
+## Modules
+We currently have those pre-installed official modules:
+- none
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Stay with us, I will try to add as many modules as possible in the future.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Overlays
+For now, the overlay editor is still a work in progress, but to create your own overlay you only need a little knowledge of HTML and JS.\
+You can also use pre-made overlays.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+For instructions on how to create overlays check out this page or see them here.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## For developers
+You can find the full specifications for the operation and creation of the modules on the site and here.\
+You can find the full specifications for the operation and creation of the overlays on the site and here.
