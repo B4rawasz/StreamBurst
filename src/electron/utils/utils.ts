@@ -105,6 +105,7 @@ export function loadSettings(): Settings {
 
 	if (!fs.existsSync(settingsPath)) {
 		const settingsDefault: Settings = {
+			theme: "dark",
 			sidebarOnHover: true,
 			devMode: false,
 			servicePort: 5051,

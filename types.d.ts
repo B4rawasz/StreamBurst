@@ -71,11 +71,13 @@ interface Window {
 		fullscreen: (fullscreen: boolean) => void;
 		getSettings: () => Promise<Settings>;
 		setSettings: (settings: Settings) => void;
+		settingsChanged: (callback: (settings: Settings) => void) => void;
 		sendTestPayload: (payload: string) => void;
 	};
 }
 
 type Settings = {
+	theme: "dark" | "light" | "system";
 	sidebarOnHover: boolean;
 	devMode: boolean;
 	servicePort: number;

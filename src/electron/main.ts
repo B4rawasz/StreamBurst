@@ -30,10 +30,10 @@ app.on("ready", () => {
 		);
 	}
 
-	setup();
+	setup(mainWindow);
 });
 
-async function setup() {
+async function setup(mainWindow: BrowserWindow) {
 	await setupFiles();
 
 	modules = await loadModules();
@@ -158,6 +158,7 @@ async function setup() {
 			path.join(app.getPath("userData"), "settings.json"),
 			JSON.stringify(settings, null, 4)
 		);
+		mainWindow.webContents.send("settingsChanged", settings);
 	});
 
 	ipcMain.handle("sendTestPayload", (_, payload: string) => {

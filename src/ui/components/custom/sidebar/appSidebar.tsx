@@ -11,7 +11,9 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { MonitorCog, PencilRuler, Puzzle, Settings } from "lucide-react";
+import { MonitorCog, PencilRuler, Puzzle } from "lucide-react";
+import SettingsDialog from "../settings/SettingsDialog";
+import { useEffect, useState } from "react";
 
 const AppSidebar = ({
 	page,
@@ -23,11 +25,25 @@ const AppSidebar = ({
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const { toggleSidebar } = useSidebar();
+	const [hover, setHover] = useState<null | boolean>();
+
+	useEffect(() => {
+		(async () => {
+			setHover(await (await window.electron.getSettings()).sidebarOnHover);
+		})();
+	}, []);
+
+	useEffect(() => {
+		window.electron.settingsChanged((settings) => {
+			setHover(settings.sidebarOnHover);
+		});
+	});
+
 	return (
 		<Sidebar
 			collapsible="icon"
-			onMouseEnter={() => setOpen(true)}
-			onMouseLeave={() => setOpen(false)}
+			onMouseEnter={() => hover && setOpen(true)}
+			onMouseLeave={() => hover && setOpen(false)}
 		>
 			<SidebarHeader>
 				<SidebarMenu>
@@ -78,10 +94,7 @@ const AppSidebar = ({
 			<SidebarFooter>
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton>
-							<Settings />
-							Settings
-						</SidebarMenuButton>
+						<SettingsDialog />
 					</SidebarMenuItem>
 				</SidebarMenu>
 			</SidebarFooter>
