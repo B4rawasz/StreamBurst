@@ -28,7 +28,7 @@ jobs:
       run:
         working-directory: ./docs
     steps:
-      - name: Checkout gh-pages branch
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Detect package manager
