@@ -1,0 +1,7 @@
+{
+	"title": "Test 1",
+	"description": "This is a test page",
+	"root": true,
+	"icon": "Activity",
+	"iconColor": "hsl(142.1 76.2% 36.3%)"
+}
