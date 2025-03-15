@@ -4,8 +4,6 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>WebSocket Dev</title>
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="http://localhost:5056/StreamBurst/stream_burst.js"></script>
 	</head>
 	<body>
 		<h1>WebSocket Demo</h1>
@@ -16,9 +14,7 @@
 			style="width: 50px; height: 50px; background-color: red"
 		></div>
 		<script>
-			sb.on("streamburst-devmodule", "test2", (data) => {
-				console.log(data);
-			});
+			sb.enableDebug();
 		</script>
 	</body>
 </html>
