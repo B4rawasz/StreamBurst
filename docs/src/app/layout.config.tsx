@@ -15,7 +15,7 @@ export const baseOptions: BaseLayoutProps = {
 		title: (
 			<>
 				<Logo size={32} fill="currentColor" />
-				Stream Burst
+				StreamBurst
 			</>
 		),
 	},
