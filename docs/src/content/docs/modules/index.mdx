@@ -1,0 +1,35 @@
+---
+title: Quick Start
+description: Guide for module development
+icon: BookMarked
+---
+
+import { Card, Cards } from "fumadocs-ui/components/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Package, Blocks } from "lucide-react";
+
+# What is a module?
+
+Module is a basic component of Stream Burst. It allows you to standardize communication with external applications. Thanks to them, you can see animations and responsive overlays on transmissions.
+
+# How to create a module?
+
+You have two options to choose from. Start working with the template module, or start from scratch.
+
+<span className="grid grid-cols-2 gap-2 w-full *:h-16">
+	<Button variant="outline" asChild>
+		<Link href="./modules/template" className=" no-underline">
+			<Package />
+			Start with template
+		</Link>
+	</Button>
+
+    <Button variant="outline" asChild>
+    	<Link href="./modules/scratch" className=" no-underline">
+    		<Blocks />
+    		Start from scratch
+    	</Link>
+    </Button>
+
+</span>

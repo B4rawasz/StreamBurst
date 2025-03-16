@@ -1,0 +1,8 @@
+{
+	"title": "Modules",
+	"description": "Module developer's manual",
+	"root": true,
+	"icon": "Puzzle",
+	"iconColor": "modules",
+	"pages": ["---Introduction---", "index", "---Setup---", "template", "scratch"]
+}
