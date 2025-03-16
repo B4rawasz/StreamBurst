@@ -8,6 +8,7 @@ import {
 import { notFound } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { MDXComponents } from "mdx/types";
+import { footerEnabled } from "@/config/config.mjs";
 
 export default async function Page(props: {
 	params: Promise<{ slug?: string[] }>;
@@ -17,6 +18,8 @@ export default async function Page(props: {
 	if (!page) notFound();
 
 	const MDX = page.data.body;
+
+	console.log(params);
 
 	return (
 		<DocsPage
@@ -28,7 +31,9 @@ export default async function Page(props: {
 				sha: "main",
 				// file path, make sure it's valid
 				path: `docs/src/content/docs/${page.file.path}`,
+				className: footerEnabled(params.slug?.[0] ?? "") ? "" : "mb-4",
 			}}
+			footer={{ enabled: footerEnabled(params.slug?.[0] ?? "") }}
 		>
 			<DocsTitle>{page.data.title}</DocsTitle>
 			<DocsDescription>{page.data.description}</DocsDescription>
