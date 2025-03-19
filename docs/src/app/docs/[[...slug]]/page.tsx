@@ -19,7 +19,8 @@ export default async function Page(props: {
 
 	const MDX = page.data.body;
 
-	console.log(params);
+	const isFooterEnabled =
+		page.data.footer ?? footerEnabled(params.slug?.[0] ?? "");
 
 	return (
 		<DocsPage
@@ -31,9 +32,9 @@ export default async function Page(props: {
 				sha: "main",
 				// file path, make sure it's valid
 				path: `docs/src/content/docs/${page.file.path}`,
-				className: footerEnabled(params.slug?.[0] ?? "") ? "" : "mb-4",
+				className: isFooterEnabled ? "" : "mb-4",
 			}}
-			footer={{ enabled: footerEnabled(params.slug?.[0] ?? "") }}
+			footer={{ enabled: isFooterEnabled }}
 		>
 			<DocsTitle>{page.data.title}</DocsTitle>
 			<DocsDescription>{page.data.description}</DocsDescription>

@@ -6,6 +6,7 @@ icon: BookMarked
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { LinkCards, LinkCard } from "@/components/ui/LinkCards";
 import { Package, Blocks } from "lucide-react";
 
 ## What is a module?
@@ -16,13 +17,18 @@ Module is a basic component of Stream Burst. It allows you to standardize commun
 
 You have two options to choose from. Start working with the template module, or start from scratch.
 
-<span className="grid grid-cols-2 gap-2 w-full *:h-16">
+<LinkCards>
 	<Button variant="outline" asChild>
 		<Link href="./modules/template" className=" no-underline">
 			<Package />
 			Start with template
 		</Link>
 	</Button>
+
+    <LinkCard href="./modules/template">
+    	<Package />
+    	Start with template
+    </LinkCard>
 
     <Button variant="outline" asChild>
     	<Link href="./modules/scratch" className=" no-underline">
@@ -31,4 +37,4 @@ You have two options to choose from. Start working with the template module, or 
     	</Link>
     </Button>
 
-</span>
+</LinkCards>

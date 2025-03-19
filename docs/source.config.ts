@@ -1,4 +1,9 @@
-import { defineDocs, defineConfig, metaSchema } from "fumadocs-mdx/config";
+import {
+	defineDocs,
+	defineConfig,
+	metaSchema,
+	frontmatterSchema,
+} from "fumadocs-mdx/config";
 import { z } from "zod";
 
 export const docs = defineDocs({
@@ -6,6 +11,11 @@ export const docs = defineDocs({
 	meta: {
 		schema: metaSchema.extend({
 			iconColor: z.string().optional(),
+		}),
+	},
+	docs: {
+		schema: frontmatterSchema.extend({
+			footer: z.boolean().optional(),
 		}),
 	},
 });

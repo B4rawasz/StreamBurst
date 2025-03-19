@@ -1,0 +1,68 @@
+---
+title: Quick Start
+description: Unleash your stream with Stream Burst
+icon: BookMarked
+footer: false
+---
+
+import { Download, Tv, Puzzle, PencilRuler, Video } from "lucide-react";
+import {
+	LinkCards,
+	LinkCardComplex,
+	LinkCardTitle,
+} from "@/components/ui/LinkCards";
+
+## Welcome!
+
+StreamBurst is an application that will allow you to bring your broadcast to life.
+
+## What StreamBurst can do
+
+Connect to your favorite games/apps and spice up your viewers' watching experience.\
+All you have to do is choose the right module, overlay, configure the settings and you're done!
+
+[img here]
+
+If you want you can also create your own module.
+
+## What's next?
+
+<LinkCards>
+	<LinkCardComplex href="./app/installation">
+		<LinkCardTitle>
+			<Download />
+			{"Installation"}
+		</LinkCardTitle>
+		{"Find out how to install StreamBurst"}
+	</LinkCardComplex>
+
+    <LinkCardComplex href="./app/obs">
+    	<LinkCardTitle>
+    		<Video />
+    		{"Usage with OBS"}
+    	</LinkCardTitle>
+    	{"See how to configure OBS inputs"}
+    </LinkCardComplex>
+
+    <LinkCardComplex href="./app/modules">
+    	<LinkCardTitle>
+    		<Puzzle />
+    		{"Modules"}
+    	</LinkCardTitle>
+    	{"Check what modules are available and how to use them"}
+    </LinkCardComplex>
+
+    <LinkCardComplex href="./app/overlays">
+    	<LinkCardTitle>
+    		<PencilRuler />
+    		{"Overlays"}
+    	</LinkCardTitle>
+    	{"Learn more about overlays"}
+    </LinkCardComplex>
+
+</LinkCards>
+
+## For developers
+
+You can find the full specifications for the operation and creation of the modules on the site and here.\
+You can find the full specifications for the operation and creation of the overlays on the site and here.
