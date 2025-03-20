@@ -3,5 +3,17 @@
 	"description": "User Guide",
 	"root": true,
 	"icon": "AppWindow",
-	"iconColor": "app"
+	"iconColor": "app",
+	"pages": [
+		"index",
+		"---Installation---",
+		"installation",
+		"installation_source",
+		"---OBS---",
+		"obs",
+		"---Modules---",
+		"modules",
+		"---Overlays---",
+		"overlays"
+	]
 }
