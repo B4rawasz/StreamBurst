@@ -1,3 +1,4 @@
+import { RehypeCodeOptions } from "fumadocs-core/mdx-plugins";
 import {
 	defineDocs,
 	defineConfig,
@@ -5,6 +6,7 @@ import {
 	frontmatterSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
+import { ShikiTransformer } from "@shikijs/types";
 
 export const docs = defineDocs({
 	dir: "src/content/docs",
@@ -23,5 +25,17 @@ export const docs = defineDocs({
 export default defineConfig({
 	mdxOptions: {
 		// MDX options
+		rehypeCodeOptions: {
+			icon: false,
+			transformers: [
+				{
+					transformer: "icon",
+					pre(hast) {
+						hast.properties.icon = this.options.lang;
+						return hast;
+					},
+				} as ShikiTransformer,
+			],
+		} as RehypeCodeOptions,
 	},
 });

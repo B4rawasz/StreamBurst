@@ -9,6 +9,8 @@ import { notFound } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { MDXComponents } from "mdx/types";
 import { footerEnabled } from "@/config/config.mjs";
+import { HTMLAttributes } from "react";
+import { BetterCodeblock } from "@/components/ui/BetterCodeBlock";
 
 export default async function Page(props: {
 	params: Promise<{ slug?: string[] }>;
@@ -43,6 +45,9 @@ export default async function Page(props: {
 					components={
 						{
 							...defaultMdxComponents /*APIPage: openapi.APIPage*/,
+							pre: (props: HTMLAttributes<HTMLPreElement>) => (
+								<BetterCodeblock {...props} />
+							),
 						} as MDXComponents
 					}
 				/>
