@@ -1,4 +1,7 @@
-import { RehypeCodeOptions } from "fumadocs-core/mdx-plugins";
+import {
+	rehypeCodeDefaultOptions,
+	RehypeCodeOptions,
+} from "fumadocs-core/mdx-plugins";
 import {
 	defineDocs,
 	defineConfig,
@@ -28,6 +31,7 @@ export default defineConfig({
 		rehypeCodeOptions: {
 			icon: false,
 			transformers: [
+				...(rehypeCodeDefaultOptions.transformers ?? []),
 				{
 					transformer: "icon",
 					pre(hast) {
