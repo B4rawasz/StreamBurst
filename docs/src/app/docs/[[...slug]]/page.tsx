@@ -45,9 +45,9 @@ export default async function Page(props: {
 					components={
 						{
 							...defaultMdxComponents /*APIPage: openapi.APIPage*/,
-							pre: (props: HTMLAttributes<HTMLPreElement>) => (
+							/*pre: (props: HTMLAttributes<HTMLPreElement>) => (
 								<BetterCodeblock {...props} />
-							),
+							),*/
 						} as MDXComponents
 					}
 				/>

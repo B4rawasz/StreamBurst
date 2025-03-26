@@ -3,3 +3,48 @@ title: From Scratch
 description: Start from scratch
 icon: Blocks
 ---
+
+import { Folder, Files } from "fumadocs-ui/components/files";
+import InteractiveFile from "@/components/ui/InteractiveFile.tsx";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+
+# Basic rules
+
+Modules should be written as ESM modules.\
+At the end, modules will be packaged in .asar files that will be responsible for communicating with specific programs.
+
+# Basic project structure
+
+<Files>
+	<Folder name="module-name" defaultOpen>
+		<InteractiveFile name="package.json" href="#packagejson" />
+		<InteractiveFile name="settings_template.json" href="#settings" />
+		<InteractiveFile name="index.js" href="#index" />
+	</Folder>
+</Files>
+
+<br />
+
+## package.json
+
+```json title="package.json"
+{
+	"name": "module_name", //[!code ++]
+	"version": "0.0.0",
+	"author": "author_name",
+	"description": "Brief description of the module",
+	"main": "index.js",
+	"type": "module",
+	"license": "MIT",
+	"dependencies": {
+		"@electron/asar": "^3.2.17"
+	}
+}
+```
+
+<Callout title="Title">Hello World</Callout>
+
+```ts
+console.log("hewwo"); // [!code --]
+console.log("hello"); // [!code ++]
+```
