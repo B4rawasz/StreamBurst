@@ -4,5 +4,15 @@
 	"root": true,
 	"icon": "Puzzle",
 	"iconColor": "modules",
-	"pages": ["---Introduction---", "index", "---Setup---", "template", "scratch"]
+	"pages": [
+		"---Introduction---",
+		"index",
+		"---Setup---",
+		"template",
+		"scratch",
+		"---Deep dive---",
+		"package",
+		"settings_template",
+		"indexjs"
+	]
 }
