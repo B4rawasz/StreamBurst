@@ -30,10 +30,7 @@ export async function setupFiles(): Promise<void> {
 
 	for (const file of files) {
 		if (!fs.existsSync(path.join(modulesPath, file))) {
-			await asarCoppy(
-				path.join(preinstaledModulesPath, file),
-				path.join(modulesPath, file)
-			);
+			await asarCoppy(path.join(preinstaledModulesPath, file), path.join(modulesPath, file));
 		}
 	}
 
@@ -53,26 +50,26 @@ export async function setupFiles(): Promise<void> {
 
 	if (!fs.existsSync(path.join(publicPath, "StreamBurst"))) {
 		fs.mkdirSync(path.join(publicPath, "StreamBurst"));
-		await fsa.copyFile(
-			path.join(preinstaledPublicPath, "stream_burst.js"),
-			path.join(publicPath, "StreamBurst", "stream_burst.js")
-		);
-		await fsa.copyFile(
-			path.join(preinstaledPublicPath, "index.html"),
-			path.join(publicPath, "StreamBurst", "index.html")
-		);
+		// Copy all files from preinstalled public path to StreamBurst directory
+		const publicFiles = fs.readdirSync(preinstaledPublicPath);
+		for (const file of publicFiles) {
+			const srcPath = path.join(preinstaledPublicPath, file);
+			const destPath = path.join(publicPath, "StreamBurst", file);
+
+			// Skip directories and only copy files
+			if (fs.statSync(srcPath).isFile()) {
+				await fsa.copyFile(srcPath, destPath);
+			}
+		}
 	}
 
 	if (isDev()) {
-		fs.watchFile(
-			path.join(preinstaledPublicPath, "stream_burst.js"),
-			async () => {
-				await fsa.copyFile(
-					path.join(preinstaledPublicPath, "stream_burst.js"),
-					path.join(publicPath, "StreamBurst", "stream_burst.js")
-				);
-			}
-		);
+		fs.watchFile(path.join(preinstaledPublicPath, "stream_burst.js"), async () => {
+			await fsa.copyFile(
+				path.join(preinstaledPublicPath, "stream_burst.js"),
+				path.join(publicPath, "StreamBurst", "stream_burst.js")
+			);
+		});
 		fs.watchFile(path.join(preinstaledPublicPath, "index.html"), async () => {
 			await fsa.copyFile(
 				path.join(preinstaledPublicPath, "index.html"),

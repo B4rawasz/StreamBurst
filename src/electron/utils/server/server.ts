@@ -29,18 +29,21 @@ class Server implements Server {
 		this.enabled = false;
 		this.port = 0;
 
+		this.app.get("/logs", (req: Request, res: Response) => {
+			const logsPath = path.join(electronApp.getPath("userData"), "public", "StreamBurst", "logs.html");
+
+			if (fs.existsSync(logsPath)) {
+				res.sendFile(logsPath);
+			} else {
+				res.status(404).send("Logs page not found.");
+			}
+		});
+
 		this.app.use((req: Request, res: Response, next: NextFunction): void => {
-			const requestedPath = path.join(
-				electronApp.getPath("userData"),
-				"public",
-				req.path
-			);
+			const requestedPath = path.join(electronApp.getPath("userData"), "public", req.path);
 
 			// Check if the requested path is a directory
-			if (
-				fs.existsSync(requestedPath) &&
-				fs.statSync(requestedPath).isDirectory()
-			) {
+			if (fs.existsSync(requestedPath) && fs.statSync(requestedPath).isDirectory()) {
 				const indexPath = path.join(requestedPath, "index.html");
 
 				if (fs.existsSync(indexPath)) {
@@ -60,9 +63,7 @@ class Server implements Server {
 			next();
 		});
 
-		this.app.use(
-			express.static(path.join(electronApp.getPath("userData"), "public"))
-		);
+		this.app.use(express.static(path.join(electronApp.getPath("userData"), "public")));
 
 		this.io.on("connection", (socket) => {
 			if (isDev()) {
@@ -72,6 +73,18 @@ class Server implements Server {
 			socket.on("disconnect", () => {
 				if (isDev()) {
 					console.log("Client disconnected: ", socket.id);
+				}
+			});
+		});
+
+		this.io.of("/logs").on("connection", (socket) => {
+			if (isDev()) {
+				console.log("Client connected LOGS: ", socket.id);
+			}
+
+			socket.on("disconnect", () => {
+				if (isDev()) {
+					console.log("Client disconnected LOGS: ", socket.id);
 				}
 			});
 		});
