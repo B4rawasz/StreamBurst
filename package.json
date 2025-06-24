@@ -20,6 +20,7 @@
 		"dist:win": "npm run transpile:electron && npm run build && electron-builder --win --x64"
 	},
 	"dependencies": {
+		"@colors/colors": "^1.6.0",
 		"@monaco-editor/react": "^4.7.0",
 		"@radix-ui/react-alert-dialog": "^1.1.6",
 		"@radix-ui/react-dialog": "^1.1.4",
@@ -40,7 +41,8 @@
 		"socket.io": "^4.8.1",
 		"tailwind-merge": "^2.6.0",
 		"tailwindcss-animate": "^1.0.7",
-		"uuid": "^11.0.5"
+		"uuid": "^11.0.5",
+		"winston": "^3.17.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.17.0",
