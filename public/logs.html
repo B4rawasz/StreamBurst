@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>StreamBurst Logs</title>
+		<script src="/StreamBurst/stream_burst_logs.js" type="module" defer></script>
+		<style>
+			:root {
+				--background: 20 14.3% 4.1%;
+				--foreground: 0 0% 95%;
+				--card: 24 9.8% 10%;
+				--error: 343 100% 50%;
+				--warn: 47 100% 50%;
+				--info: 110 100% 50%;
+				--http: 179 100% 50%;
+				--event: 300 100% 50%;
+				--debug: 220 100% 50%;
+			}
+			body {
+				background-color: hsl(var(--background));
+				color: hsl(var(--foreground));
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+			#container {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				padding: 1rem;
+				gap: 1rem;
+			}
+			.logs-container {
+				background-color: hsl(var(--card));
+				border-radius: 8px;
+				padding: 0.5rem;
+				max-height: calc(50vh - 1rem);
+				height: calc(50vh - 1rem);
+				overflow-y: hidden;
+				display: flex;
+				flex-direction: column;
+			}
+			.logs-container > span {
+				font-weight: bold;
+				display: block;
+				margin-bottom: 0.5rem;
+				font-size: 2rem;
+			}
+			.logs {
+				flex: 1;
+				overflow-x: hidden;
+				text-overflow: ellipsis;
+				overflow-y: scroll;
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+			.log {
+				display: grid;
+				grid-template-columns: auto 1fr auto;
+				gap: 2rem;
+				padding: 0.5rem;
+				border-radius: 8px;
+			}
+			.error {
+				background-color: hsl(var(--error) / 0.6);
+			}
+			.warn {
+				background-color: hsl(var(--warn) / 0.6);
+			}
+			.info {
+				background-color: hsl(var(--info) / 0.6);
+			}
+			.http {
+				background-color: hsl(var(--http) / 0.6);
+			}
+			.event {
+				background-color: hsl(var(--event) / 0.6);
+			}
+			.debug {
+				background-color: hsl(var(--debug) / 0.6);
+			}
+			#popup {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100vw;
+				height: 100vh;
+				background-color: rgba(0, 0, 0, 0.5);
+				justify-content: center;
+				align-items: center;
+				display: none;
+			}
+			#popup > div {
+				background-color: hsl(var(--card));
+				border-radius: 8px;
+				padding: 1rem;
+				max-width: 90vw;
+				min-width: 20vw;
+				max-height: 90vh;
+				overflow-y: auto;
+			}
+			#popup > div > span {
+				font-weight: bold;
+				display: block;
+				margin-bottom: 0.5rem;
+				font-size: 1.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="popup">
+			<div>
+				<span>Log Details</span>
+				<div id="popup-title"></div>
+				<div id="popup-message"></div>
+				<div id="popup-timestamp"></div>
+				<div id="popup-content" style="margin-top: 0.5rem"></div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -2,6 +2,9 @@ import { app } from "electron";
 import path from "path";
 import fs from "fs";
 import fsa from "fs/promises";
+import { mainLogger } from "./logger.js";
+
+const logger = mainLogger.createModuleLogger("Utils");
 
 export function isDev(): boolean {
 	return process.env.NODE_ENV === "development";
@@ -17,6 +20,9 @@ export async function setupFiles(): Promise<void> {
 	} else {
 		preinstaledModulesPath = path.join(app.getAppPath(), "..", "..", "modules");
 	}
+
+	logger.debug(`Preinstalled modules path: ${preinstaledModulesPath}`);
+	logger.debug(`Modules path: ${modulesPath}`);
 
 	if (!fs.existsSync(modulesPath)) {
 		fs.mkdirSync(modulesPath);
@@ -44,37 +50,56 @@ export async function setupFiles(): Promise<void> {
 		preinstaledPublicPath = path.join(app.getAppPath(), "..", "..", "public");
 	}
 
+	logger.debug(`Preinstalled public path: ${preinstaledPublicPath}`);
+	logger.debug(`Public path: ${publicPath}`);
+
 	if (!fs.existsSync(publicPath)) {
 		fs.mkdirSync(publicPath);
 	}
 
 	if (!fs.existsSync(path.join(publicPath, "StreamBurst"))) {
 		fs.mkdirSync(path.join(publicPath, "StreamBurst"));
-		// Copy all files from preinstalled public path to StreamBurst directory
-		const publicFiles = fs.readdirSync(preinstaledPublicPath);
-		for (const file of publicFiles) {
-			const srcPath = path.join(preinstaledPublicPath, file);
-			const destPath = path.join(publicPath, "StreamBurst", file);
+	}
 
-			// Skip directories and only copy files
-			if (fs.statSync(srcPath).isFile()) {
-				await fsa.copyFile(srcPath, destPath);
-			}
+	const publicFiles = fs.readdirSync(preinstaledPublicPath);
+	for (const file of publicFiles) {
+		const srcPath = path.join(preinstaledPublicPath, file);
+		const destPath = path.join(publicPath, "StreamBurst", file);
+
+		if (!fs.existsSync(destPath)) {
+			await fsa.copyFile(srcPath, destPath);
 		}
 	}
 
 	if (isDev()) {
+		logger.debug("Setting up file watchers for public files");
 		fs.watchFile(path.join(preinstaledPublicPath, "stream_burst.js"), async () => {
 			await fsa.copyFile(
 				path.join(preinstaledPublicPath, "stream_burst.js"),
 				path.join(publicPath, "StreamBurst", "stream_burst.js")
 			);
+			logger.debug("Copied stream_burst.js to public folder");
 		});
 		fs.watchFile(path.join(preinstaledPublicPath, "index.html"), async () => {
 			await fsa.copyFile(
 				path.join(preinstaledPublicPath, "index.html"),
 				path.join(publicPath, "StreamBurst", "index.html")
 			);
+			logger.debug("Copied index.html to public folder");
+		});
+		fs.watchFile(path.join(preinstaledPublicPath, "stream_burst_logs.js"), async () => {
+			await fsa.copyFile(
+				path.join(preinstaledPublicPath, "stream_burst_logs.js"),
+				path.join(publicPath, "StreamBurst", "stream_burst_logs.js")
+			);
+			logger.debug("Copied stream_burst_logs.js to public folder");
+		});
+		fs.watchFile(path.join(preinstaledPublicPath, "logs.html"), async () => {
+			await fsa.copyFile(
+				path.join(preinstaledPublicPath, "logs.html"),
+				path.join(publicPath, "StreamBurst", "logs.html")
+			);
+			logger.debug("Copied logs.html to public folder");
 		});
 	}
 }
@@ -93,7 +118,7 @@ async function asarCoppy(src: string, dest: string): Promise<void> {
 		await fsa.copyFile(tempName, dest);
 		await fsa.rename(tempName, src);
 	} catch (err) {
-		console.log(err);
+		logger.error(`Error copying file ${src} to ${dest}:`, err);
 	}
 }
 

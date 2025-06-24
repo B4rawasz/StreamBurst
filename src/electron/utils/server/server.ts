@@ -5,6 +5,9 @@ import { app as electronApp } from "electron";
 import path from "path";
 import fs from "fs";
 import { isDev } from "../utils.js";
+import { mainLogger } from "../logger.js";
+
+const logger = mainLogger.createModuleLogger("Server");
 
 interface Server {
 	app: express.Express;
@@ -66,26 +69,18 @@ class Server implements Server {
 		this.app.use(express.static(path.join(electronApp.getPath("userData"), "public")));
 
 		this.io.on("connection", (socket) => {
-			if (isDev()) {
-				console.log("Client connected: ", socket.id);
-			}
+			logger.http("Client connected", socket.id);
 
 			socket.on("disconnect", () => {
-				if (isDev()) {
-					console.log("Client disconnected: ", socket.id);
-				}
+				logger.http("Client disconnected", socket.id);
 			});
 		});
 
 		this.io.of("/logs").on("connection", (socket) => {
-			if (isDev()) {
-				console.log("Client connected LOGS: ", socket.id);
-			}
+			logger.http("Client connected to logs", socket.id);
 
 			socket.on("disconnect", () => {
-				if (isDev()) {
-					console.log("Client disconnected LOGS: ", socket.id);
-				}
+				logger.http("Client disconnected from logs", socket.id);
 			});
 		});
 	}
@@ -99,9 +94,7 @@ class Server implements Server {
 		this.port = port;
 
 		this.server.listen(port, () => {
-			if (isDev()) {
-				console.log("Server started on port: ", port);
-			}
+			logger.info(`Server started on port ${port}`);
 		});
 	}
 
@@ -113,18 +106,12 @@ class Server implements Server {
 		this.enabled = false;
 
 		this.server.close(() => {
-			if (isDev()) {
-				console.log("Server stopped");
-			}
+			logger.info("Server stopped");
 		});
 	}
 
 	emit(event: string, data: any) {
 		if (!this.enabled) return;
-
-		if (isDev()) {
-			console.log("Emitting event: ", event, data);
-		}
 
 		this.io.emit(event, data);
 	}

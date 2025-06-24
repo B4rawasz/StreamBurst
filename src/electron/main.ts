@@ -6,13 +6,15 @@ import { getPreloadPath } from "./utils/pathResolver.js";
 import { loadModules, prepareModulesInfo } from "./utils/modules/moduleLoader.js";
 import Server from "./utils/server/server.js";
 import { loadPages } from "./utils/pages/pageLoader.js";
-import { logger } from "./utils/logger.js";
+import { mainLogger } from "./utils/logger.js";
 
 let modules: Module[] = [];
 let modulesInfo: ModuleInfo[] = [];
 let settings: Settings;
 let pages: string[] = [];
 let server: Server;
+
+const logger = mainLogger.createModuleLogger("Main");
 
 app.on("ready", () => {
 	const mainWindow = new BrowserWindow({
@@ -38,32 +40,42 @@ async function setup(mainWindow: BrowserWindow) {
 	pages = loadPages();
 
 	modulesInfo.forEach((module) => {
-		console.log(module.events);
+		logger.debug(`${module.package.name}`, module.events);
 	});
 
 	server = new Server();
 	server.start(settings.servicePort);
-
-	logger.setServer(server);
-	const mainLogger = logger.createModuleLogger("main");
+	mainLogger.setServer(server);
 
 	modules.forEach((module) => {
+		const moduleLogger = mainLogger.createModuleLogger(module.package.name);
 		module.main.on("event", (data) => {
 			server.emit("event", data);
-			if (isDev()) {
-				console.log(data);
+			try {
+				data = JSON.parse(data);
+				moduleLogger.event("Object", data);
+			} catch (e) {
+				moduleLogger.event(data);
 			}
 		});
 		module.main.on("error", (data) => {
 			server.emit("error", data);
-			if (isDev()) {
-				console.error(data);
+
+			try {
+				data = JSON.parse(data);
+				moduleLogger.error("Object", data);
+			} catch (e) {
+				moduleLogger.error(data);
 			}
 		});
 		module.main.on("debug", (data) => {
 			server.emit("debug", data);
-			if (isDev()) {
-				console.debug(data);
+
+			try {
+				data = JSON.parse(data);
+				moduleLogger.debug("Object", data);
+			} catch (e) {
+				moduleLogger.debug(data);
 			}
 		});
 
@@ -107,6 +119,8 @@ async function setup(mainWindow: BrowserWindow) {
 			module.main.disable();
 			module.main.enable();
 		}
+
+		logger.debug(`Module settings applied to ${newModule.package.name}`, { module: newModule });
 	});
 
 	ipcMain.handle("changeModuleState", (_, moduleName: string, enabled: boolean) => {
@@ -138,6 +152,7 @@ async function setup(mainWindow: BrowserWindow) {
 		settings = newSettings;
 		fs.writeFileSync(path.join(app.getPath("userData"), "settings.json"), JSON.stringify(settings, null, 4));
 		mainWindow.webContents.send("settingsChanged", settings);
+		logger.debug("Settings updated", { settings: newSettings });
 	});
 
 	ipcMain.handle("sendTestPayload", (_, payload: string) => {
@@ -146,17 +161,35 @@ async function setup(mainWindow: BrowserWindow) {
 		switch (obj.type) {
 			case "event":
 				server.emit("event", payload);
+				try {
+					const data = JSON.parse(payload);
+					logger.event("Object", data);
+				} catch (e) {
+					logger.event(payload);
+				}
 				break;
 			case "error":
 				server.emit("error", payload);
+				try {
+					const data = JSON.parse(payload);
+					logger.error("Object", data);
+				} catch (e) {
+					logger.error(payload);
+				}
 				break;
 			case "debug":
 				server.emit("debug", payload);
+				try {
+					const data = JSON.parse(payload);
+					logger.debug("Object", data);
+				} catch (e) {
+					logger.debug(payload);
+				}
 				break;
 		}
 	});
 
-	mainLogger.info("Starting StreamBurst Electron App", {
+	logger.info("Starting StreamBurst Electron App", {
 		version: app.getVersion(),
 		isDev: isDev(),
 	});
