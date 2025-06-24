@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Dialog,
 	DialogContent,
@@ -16,17 +9,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-	HoverCard,
-	HoverCardContent,
-	HoverCardTrigger,
-} from "@/components/ui/hover-card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { Puzzle, Settings } from "lucide-react";
+import { Info, Puzzle, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const ModulesPage = () => {
@@ -69,8 +58,10 @@ const ModuleCard = ({ module }: { module: ModuleInfo }) => {
 				</ScrollArea>
 			</CardContent>
 			<CardFooter className="flex justify-between">
-				<ModuleSettings module={module} />
-				<ModuleEvents module={module} />
+				<span className="flex flex-row gap-1">
+					<ModuleSettings module={module} />
+					<ModuleEvents module={module} />
+				</span>
 				<Switch
 					checked={enabled}
 					onCheckedChange={(e) => {
@@ -111,14 +102,7 @@ const ModuleSettings = ({ module }: { module: ModuleInfo }) => {
 				<ScrollArea className="flex-1 h-1 overflow-y-auto">
 					<div className="flex flex-col gap-4">
 						{Object.entries(newSettings).map(([key, value]) => {
-							return (
-								<ModuleSettingsInput
-									valueKey={key}
-									value={value}
-									setNewSettings={setNewSettings}
-									key={key}
-								/>
-							);
+							return <ModuleSettingsInput valueKey={key} value={value} setNewSettings={setNewSettings} key={key} />;
 						})}
 					</div>
 				</ScrollArea>
@@ -150,9 +134,7 @@ const ModuleSettingsInput = ({
 }: {
 	valueKey: string;
 	value: ModuleSettingsProperty;
-	setNewSettings: React.Dispatch<
-		React.SetStateAction<{ [key: string]: ModuleSettingsProperty }>
-	>;
+	setNewSettings: React.Dispatch<React.SetStateAction<{ [key: string]: ModuleSettingsProperty }>>;
 }) => {
 	return (
 		<div className="flex flex-row gap-2 items-center justify-between px-1">
@@ -206,7 +188,7 @@ const ModuleEvents = ({ module }: { module: ModuleInfo }) => {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button size="icon" variant="ghost">
-					<Settings />
+					<Info />
 				</Button>
 			</DialogTrigger>
 			<DialogContent
@@ -225,18 +207,13 @@ const ModuleEvents = ({ module }: { module: ModuleInfo }) => {
 				<ScrollArea className="flex-1 h-1 overflow-y-auto">
 					<div className="flex flex-col gap-4">
 						{Object.entries(module.events).map(([key, value]) => {
-							return (
-								<ModuleEventsEvent eventId={key} event={value} key={key} />
-							);
+							return <ModuleEventsEvent eventId={key} event={value} key={key} />;
 						})}
 					</div>
 				</ScrollArea>
 				<DialogFooter>
 					<DialogClose asChild>
-						<Button type="submit">Save</Button>
-					</DialogClose>
-					<DialogClose asChild>
-						<Button variant="secondary">Cancel</Button>
+						<Button type="submit">Close</Button>
 					</DialogClose>
 				</DialogFooter>
 			</DialogContent>
@@ -244,13 +221,7 @@ const ModuleEvents = ({ module }: { module: ModuleInfo }) => {
 	);
 };
 
-const ModuleEventsEvent = ({
-	eventId,
-	event,
-}: {
-	eventId: string;
-	event: ModuleEventsEvent;
-}) => {
+const ModuleEventsEvent = ({ eventId, event }: { eventId: string; event: ModuleEventsEvent }) => {
 	return (
 		<div className="flex flex-col gap-2 bg-card rounded-md p-2">
 			<div className="text-md font-bold">{eventId}</div>
@@ -258,13 +229,8 @@ const ModuleEventsEvent = ({
 			{Object.keys(event.params).length > 0 && <Separator />}
 			{Object.entries(event.params).map(([key, value]) => {
 				return (
-					<div
-						key={key}
-						className="grid grid-cols-[auto,1fr] gap-2 items-center"
-					>
-						<div className="font-medium bg-secondary w-min p-1.5 rounded-md">
-							{key}
-						</div>
+					<div key={key} className="grid grid-cols-[auto,1fr] gap-2 items-center">
+						<div className="font-medium bg-secondary w-min p-1.5 rounded-md">{key}</div>
 						<div>Type: {value.type}</div>
 						<div className="col-span-2">{value.description}</div>
 					</div>
