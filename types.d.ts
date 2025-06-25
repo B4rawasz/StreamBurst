@@ -3,14 +3,12 @@ type ModuleMain = {
 	disable: () => void;
 	setSettingsPath: (path: string) => void;
 	enabled: boolean;
-	on: (
-		event: "event" | "error" | "debug",
-		callback: (data: any) => void
-	) => void;
+	on: (event: "event" | "error" | "debug", callback: (data: any) => void) => void;
 };
 
 type ModulePackage = {
 	name: string;
+	productName: string;
 	version: string;
 	author: string;
 	description: string;

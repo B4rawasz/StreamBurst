@@ -18,10 +18,7 @@ At the end, modules will be packaged in .asar files that will be responsible for
 <Files>
 	<Folder name="module_name" defaultOpen>
 		<InteractiveFile name="package.json" href="#packagejson" />
-		<InteractiveFile
-			name="settings_template.json"
-			href="#settings_templatejson"
-		/>
+		<InteractiveFile name="settings_template.json" href="#settings_templatejson" />
 		<InteractiveFile name="index.js" href="#indexjs" />
 	</Folder>
 </Files>
@@ -33,6 +30,7 @@ At the end, modules will be packaged in .asar files that will be responsible for
 Make sure to provide all of these nesessary fields and more if you need it.
 
 - `name`: The name of the module. It should be unique and descriptive.
+- `productName`: This is usually the same as the name but can be more user-friendly. Used in the UI.
 - `version`: The version of the module. Follow [semantic versioning](https://semver.org/) guidelines.
 - `author`: The author of the module. This can be a name or an organization.
 - `description`: A brief description of what the module does.
@@ -45,6 +43,7 @@ Make sure to provide all of these nesessary fields and more if you need it.
 ```json title="package.json"
 {
 	"name": "module_name",
+	"productName": "Module Name",
 	"version": "0.0.0",
 	"author": "author_name",
 	"description": "Brief description of the module",
@@ -67,12 +66,8 @@ Make sure to include:
 - `version`: Settings template version.
 - `settings`: Object containing seteings for your module.
 
-<Callout type="info">
-	Values privided in **settings_template.json** will be used as defaults.
-</Callout>
-<Callout type="warn">
-	Support only for **string**, **number** and **boolean** types.
-</Callout>
+<Callout type="info">Values privided in **settings_template.json** will be used as defaults.</Callout>
+<Callout type="warn">Support only for **string**, **number** and **boolean** types.</Callout>
 
 ```json title="settings_template.json"
 {

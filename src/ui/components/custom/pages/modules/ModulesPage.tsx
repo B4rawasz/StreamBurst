@@ -46,7 +46,7 @@ const ModuleCard = ({ module }: { module: ModuleInfo }) => {
 	return (
 		<Card className="flex-grow flex flex-col">
 			<CardHeader>
-				<CardTitle>{module.package.name}</CardTitle>
+				<CardTitle>{module.package.productName}</CardTitle>
 				<CardDescription className="flex flex-row justify-between">
 					<span>{module.package.version}</span>
 					<span>{module.package.author}</span>
@@ -93,7 +93,7 @@ const ModuleSettings = ({ module }: { module: ModuleInfo }) => {
 				}}
 			>
 				<DialogHeader>
-					<DialogTitle>{module.package.name}</DialogTitle>
+					<DialogTitle>{module.package.productName}</DialogTitle>
 					<DialogDescription className="flex flex-row justify-between">
 						<span>{module.package.version}</span>
 						<span>{module.package.author}</span>
@@ -198,7 +198,7 @@ const ModuleEvents = ({ module }: { module: ModuleInfo }) => {
 				}}
 			>
 				<DialogHeader>
-					<DialogTitle>{module.package.name}</DialogTitle>
+					<DialogTitle>{module.package.productName}</DialogTitle>
 					<DialogDescription className="flex flex-row justify-between">
 						<span>{module.package.version}</span>
 						<span>{module.package.author}</span>
