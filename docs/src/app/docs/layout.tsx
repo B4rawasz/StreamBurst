@@ -1,4 +1,4 @@
-import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { DocsLayout } from "@/components/layouts/docs";
 import type { ReactNode } from "react";
 import { baseOptions } from "@/app/layout.config";
 import { source } from "@/lib/source";
@@ -24,21 +24,9 @@ export default function Layout({ children }: { children: ReactNode }) {
 								icon: meta.data.icon && (
 									<div
 										style={{
-											color: meta.data.iconColor
-												? "var(--color-fd-primary)"
-												: "currentColor",
-											//borderColor: meta.data.iconColor,
-											borderImageSlice: 1,
-											borderImageSource: `linear-gradient(to right, transparent 10%, ${
-												meta.data.iconColor
-													? "var(--color-fd-primary)"
-													: "currentColor"
-											} 50%, transparent 90%)`,
+											color: meta.data.iconColor ? "var(--color-fd-primary)" : "currentColor",
 										}}
-										className={cn(
-											meta.data.iconColor,
-											"aspect-square p-0.5 border-b-2"
-										)}
+										className={cn(meta.data.iconColor, "flex items-center justify-center h-full")}
 									>
 										{node.icon}
 									</div>
