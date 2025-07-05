@@ -19,6 +19,7 @@ At the end, modules will be packaged in .asar files that will be responsible for
 	<Folder name="module_name" defaultOpen>
 		<InteractiveFile name="package.json" href="#packagejson" />
 		<InteractiveFile name="settings_template.json" href="#settings_templatejson" />
+		<InteractiveFile name="events.json" href="#eventsjson" />
 		<InteractiveFile name="index.js" href="#indexjs" />
 	</Folder>
 </Files>
@@ -81,6 +82,40 @@ Make sure to include:
 		"address": {
 			"value": "localhost",
 			"description": "..."
+		}
+	}
+}
+```
+
+### events.json
+
+Description of events sent from the module.
+
+With it you can preview in the module settings what type of events are sent and what parameters they have.
+
+In the future it will also be used for the editor to be able to easily associate events with items on the screen.
+
+```json title="events.json"
+{
+	"eventId": {
+		"description": "brief description of the event",
+		"params": {}
+	},
+	"eventId2": {
+		"description": "brief description of the event 2",
+		"params": {
+			"param1": {
+				"type": "string",
+				"description": "description of the parameter"
+			},
+			"param2": {
+				"type": "number",
+				"description": "description of the parameter"
+			},
+			"param3": {
+				"type": "boolean",
+				"description": "description of the parameter"
+			}
 		}
 	}
 }
