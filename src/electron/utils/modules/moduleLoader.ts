@@ -27,12 +27,13 @@ export async function loadModules(): Promise<Module[]> {
 	for (const asar of asarFiles) {
 		try {
 			const modulePath = path.join(modulesPath, asar);
-			const module = await import(pathToFileURL(path.join(modulePath, "index.js")).href).then((mod) => {
-				return mod.default as ModuleMain;
-			});
 
 			const modulePackageJSON = await fs.readFile(path.join(modulePath, "package.json"), { encoding: "utf-8" });
 			const modulePackage = JSON.parse(modulePackageJSON) as ModulePackage;
+
+			const module = await import(pathToFileURL(path.join(modulePath, modulePackage.main)).href).then((mod) => {
+				return mod.default as ModuleMain;
+			});
 
 			const moduleSettingsTemplateJSON = await fs.readFile(path.join(modulePath, "settings_template.json"), {
 				encoding: "utf-8",

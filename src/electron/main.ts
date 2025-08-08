@@ -51,6 +51,9 @@ async function setup(mainWindow: BrowserWindow) {
 		const moduleLogger = mainLogger.createModuleLogger(module.package.name);
 		module.main.on("event", (data) => {
 			server.emit("event", data);
+
+			console.log("Event from module\n", data);
+
 			try {
 				data = JSON.parse(data);
 				moduleLogger.event("Object", data);
