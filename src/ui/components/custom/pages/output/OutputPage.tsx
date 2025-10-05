@@ -10,13 +10,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MonitorCog } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -56,10 +50,10 @@ const OutputPage = () => {
 	};
 
 	const defaultPayload = `{
-    "type": "event",
-    "emitter": "moduleName",
+    "name": "moduleName",
+    "version": "1.0.0",
     "eventId": "eventId",
-    "content": {
+    "params": {
         "test": "test event"
     }\n}`;
 
@@ -176,23 +170,13 @@ const OutputPage = () => {
 						</Select>
 						<Input
 							className="w-full"
-							value={
-								"http://localhost:" +
-								newSettings?.servicePort +
-								"/" +
-								selectedPage
-							}
+							value={"http://localhost:" + newSettings?.servicePort + "/" + selectedPage}
 							readOnly
 						></Input>
 						<Button
 							variant="secondary"
 							onClick={() => {
-								navigator.clipboard.writeText(
-									"http://localhost:" +
-										newSettings?.servicePort +
-										"/" +
-										selectedPage
-								);
+								navigator.clipboard.writeText("http://localhost:" + newSettings?.servicePort + "/" + selectedPage);
 							}}
 						>
 							Copy snippet

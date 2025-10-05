@@ -171,35 +171,7 @@ async function setup(mainWindow: BrowserWindow) {
 	ipcMain.handle("sendTestPayload", (_, payload: string) => {
 		const obj = JSON.parse(payload);
 
-		switch (obj.type) {
-			case "event":
-				server.emit("event", payload);
-				try {
-					const data = JSON.parse(payload);
-					logger.event("Object", data);
-				} catch (e) {
-					logger.event(payload);
-				}
-				break;
-			case "error":
-				server.emit("error", payload);
-				try {
-					const data = JSON.parse(payload);
-					logger.error("Object", data);
-				} catch (e) {
-					logger.error(payload);
-				}
-				break;
-			case "debug":
-				server.emit("debug", payload);
-				try {
-					const data = JSON.parse(payload);
-					logger.debug("Object", data);
-				} catch (e) {
-					logger.debug(payload);
-				}
-				break;
-		}
+		server.emit("event", obj);
 	});
 
 	logger.info("Starting StreamBurst Electron App", {
