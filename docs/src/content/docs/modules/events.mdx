@@ -1,0 +1,32 @@
+---
+title: Events
+description: How to emit events from your module
+icon: SatelliteDish
+---
+
+import { TypeTable } from "@/components/type-table";
+
+<TypeTable
+	type={{
+		name: {
+			type: "string",
+			description: "The name of the event emitter",
+			required: true,
+		},
+		version: {
+			type: "string",
+			description: "The version of the event emitter",
+			required: true,
+		},
+		eventID: {
+			type: "string",
+			description: "The unique ID of the event",
+			required: true,
+		},
+		params: {
+			type: "Record<string, string | number | boolean | object>",
+			description: "The parameters of the event",
+			required: true,
+		},
+	}}
+/>

@@ -1,13 +1,5 @@
-import {
-	rehypeCodeDefaultOptions,
-	RehypeCodeOptions,
-} from "fumadocs-core/mdx-plugins";
-import {
-	defineDocs,
-	defineConfig,
-	metaSchema,
-	frontmatterSchema,
-} from "fumadocs-mdx/config";
+import { rehypeCodeDefaultOptions, RehypeCodeOptions } from "fumadocs-core/mdx-plugins";
+import { defineDocs, defineConfig, metaSchema, frontmatterSchema } from "fumadocs-mdx/config";
 import { z } from "zod";
 import { ShikiTransformer } from "@shikijs/types";
 

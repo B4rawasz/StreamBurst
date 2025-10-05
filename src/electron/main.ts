@@ -49,18 +49,27 @@ async function setup(mainWindow: BrowserWindow) {
 
 	modules.forEach((module) => {
 		const moduleLogger = mainLogger.createModuleLogger(module.package.name);
+
+		const isModuleEvent = (obj: any): obj is ModuleEvent => {
+			if (!obj || typeof obj !== "object") return false;
+			if (typeof obj.name !== "string") return false;
+			if (typeof obj.version !== "string") return false;
+			if (typeof obj.eventId !== "string") return false;
+			if (typeof obj.params !== "object" || obj.params === null) return false;
+			return true;
+		};
+
 		module.main.on("event", (data) => {
-			server.emit("event", data);
+			let parsed: any = data;
 
-			console.log("Event from module\n", data);
-
-			try {
-				data = JSON.parse(data);
-				moduleLogger.event("Object", data);
-			} catch (e) {
-				moduleLogger.event(data);
+			if (isModuleEvent(parsed)) {
+				server.emit("event", parsed);
+				moduleLogger.event("Object", parsed);
+			} else {
+				moduleLogger.warn("Invalid module event", { data });
 			}
 		});
+
 		module.main.on("error", (data) => {
 			server.emit("error", data);
 
@@ -71,6 +80,7 @@ async function setup(mainWindow: BrowserWindow) {
 				moduleLogger.error(data);
 			}
 		});
+
 		module.main.on("debug", (data) => {
 			server.emit("debug", data);
 

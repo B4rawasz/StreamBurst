@@ -59,6 +59,15 @@ type ModuleInfo = {
 	enabled: boolean;
 };
 
+type ModuleEvent = {
+	name: string;
+	version: string;
+	eventId: string;
+	params: {
+		[key: string]: string | number | boolean | object;
+	};
+};
+
 interface Window {
 	electron: {
 		subCallback: (callback: (data: any) => void) => void;
